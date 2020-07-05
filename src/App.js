@@ -3,7 +3,41 @@ import './App.css';
 
 function App() {
   return (
-    <h1>App Works ****</h1>
+    <React.Fragment>
+
+      <header>
+
+        <h1 class="text-success">HEADER WORKS !!!    <i class="far fa-bell"></i></h1>
+
+
+
+
+      </header>
+
+
+
+      <main>
+
+
+        Main Works
+
+
+      </main>
+
+
+
+      <footer>
+
+        Footer Works
+
+
+      </footer>
+
+
+
+
+    </React.Fragment>
+
   );
 }
 
