@@ -8,11 +8,13 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "jquery/dist/jquery";
 import "popper.js/dist/popper";
 import "bootstrap/dist/js/bootstrap";
-
+import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
