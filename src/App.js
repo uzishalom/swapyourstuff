@@ -2,9 +2,10 @@ import React from 'react';
 import { Switch, Route } from "react-router-dom"
 import './App.css';
 
-import Navbar from "./components/main/navbar";
-import Footer from "./components/main/footer";
+import Navbar from "./components/main-single-page/navbar";
+import Footer from "./components/main-single-page/footer";
 import About from "./components/data/about"
+import Signup from "./components/auth/signup"
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <main style={{ minHeight: '900px' }}>
         <Switch>
           <Route path="/about" exact component={About} />
+          <Route path="/signup" exact component={Signup} />
         </Switch>
       </main>
 

@@ -1,11 +1,9 @@
 import React from 'react';
+import PageHeader from "../common/page-header"
 
 const About = () => {
     return (
-
-        <h1 className="text-success text-center"><u>About Swap Your Stuff</u></h1>
-
-
+        <PageHeader title="About Stuff" />
 
     );
 }

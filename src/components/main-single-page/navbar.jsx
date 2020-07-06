@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, NavLink } from "react-router-dom"
 
 import logo from "../../images/logo.png"
+
 class Navbar extends Component {
     state = {}
     render() {
@@ -42,7 +43,7 @@ class Navbar extends Component {
                                 <NavLink className="nav-link" to="/user/signin">Signin</NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/user/signup">Signup</NavLink>
+                                <NavLink className="nav-link" to="/signup">Signup</NavLink>
                             </li>
                         </ul>
                     </div>
