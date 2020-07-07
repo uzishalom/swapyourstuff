@@ -3,6 +3,8 @@ import Joi from "joi-browser"
 
 import PageHeader from "../common/page-header"
 import Form from "../common/form"
+import api from "../../services/api-client"
+import { apiUrl } from "../../config/config.json"
 
 class Signup extends Form {
     state = {
@@ -18,8 +20,15 @@ class Signup extends Form {
         phone: Joi.any()
     }
 
-    submit() {
-        console.log("DO SUBMIt")
+    submit = async () => {
+        const { data } = this.state;
+        try {
+            await api.post(`${apiUrl}/users/adduser`, data);
+            alert("success");
+        }
+        catch (error) {
+            console.log(error + "vvv");
+        }
     }
 
 
