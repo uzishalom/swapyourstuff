@@ -6,6 +6,7 @@ import Navbar from "./components/main-single-page/navbar";
 import Footer from "./components/main-single-page/footer";
 import About from "./components/data/about"
 import Signup from "./components/auth/signup"
+import Signin from "./components/auth/signin"
 
 function App() {
   return (
@@ -17,8 +18,10 @@ function App() {
 
       <main style={{ minHeight: '900px' }}>
         <Switch>
-          <Route path="/about" exact component={About} />
+          <Route path="/" exact component={About} />
           <Route path="/signup" exact component={Signup} />
+          <Route path="/signin" exact componenet={Signin} />
+          <Route path="/about" exact component={About} />
         </Switch>
       </main>
 

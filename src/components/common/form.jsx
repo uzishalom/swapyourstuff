@@ -5,7 +5,8 @@ import Input from "./input";
 class Form extends Component {
     state = {
         data: {},
-        errors: {}
+        errors: {},
+        inSubmitProcess: false
     };
 
     validate = () => {
@@ -26,6 +27,7 @@ class Form extends Component {
     };
 
     handleSubmit = e => {
+
         e.preventDefault();
 
         const errors = this.validate();
@@ -33,6 +35,7 @@ class Form extends Component {
         if (errors) return;
 
         this.submit();
+
     };
 
     handleChange = ({ currentTarget: input }) => {
