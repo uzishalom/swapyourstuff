@@ -4,8 +4,7 @@ import Joi from "joi-browser"
 import PageHeader from "../common/page-header"
 import InProcessIndicator from "../common/in-process-indicator"
 import Form from "../common/form"
-import api from "../../services/api-client"
-import { apiUrl } from "../../config/config.json"
+import userService from "../../services/user-service"
 
 
 class Signup extends Form {
@@ -38,13 +37,13 @@ class Signup extends Form {
         // signup
         try {
             await this.setState({ inSubmitProcess: true });
-            await api.post(`${apiUrl}/users/adduser`, data);
+            await userService.signup(data);
         }
-        catch (error) {
+        catch (ex) {
             await this.setState({ inSubmitProcess: false });
 
-            if (error.response?.data?.error) {
-                this.handleSignupServerErrors(error.response.data.error);
+            if (ex.response?.data?.error) {
+                this.handleSignupServerErrors(ex.response.data.error);
                 return
             }
             this.showGeneralErrorMessage();
@@ -53,15 +52,10 @@ class Signup extends Form {
         // login after successful signup
         const { email, password } = data;
         try {
-            const result = await api.post(`${apiUrl}/auth`, { email: email, password: password });
-            if (result?.data?.token) {
-                localStorage.setItem("userToken", result.data.token)
-                this.props.history.replace("/about");
-                return;
-            }
-            this.showGeneralErrorMessage();
+            await userService.signin({ email, password });
+            window.location = "/";
         }
-        catch (error) {
+        catch (ex) {
             // if the auto-signin didn't work then we will send the user to make manual signin
             this.props.history.replace("/signin");
         }
@@ -102,7 +96,7 @@ class Signup extends Form {
     render() {
         return (
             <div className="container">
-                <PageHeader title="sign up man :)" />
+                <PageHeader title="Signup" />
                 <form onSubmit={this.handleSubmit} method="Post" className="form-group mt-5" auto-complete="off">
                     <div className="row">
                         {this.renderInput(true, "name", "Name", "text", "Your Name")}

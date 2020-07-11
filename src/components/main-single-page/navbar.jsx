@@ -6,6 +6,8 @@ import logo from "../../images/logo.png"
 class Navbar extends Component {
     state = {}
     render() {
+        const { user } = this.props;
+
         return (
 
             <nav className="navbar navbar-expand-lg navbar-light shadow-sm">
@@ -39,12 +41,24 @@ class Navbar extends Component {
                             </li>
                         </ul>
                         <ul className="navbar-nav ml-auto">
-                            <li className="nav-item">
-                                <NavLink className="nav-link" to="/user/signin">Signin</NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink className="nav-link" to="/signup">Signup</NavLink>
-                            </li>
+                            {user &&
+                                (<React.Fragment>
+                                    <li className="nav-item">
+                                        <NavLink className="nav-link" to="/signin">Logout</NavLink>
+                                    </li>
+                                    <li className="nav-item">
+                                        <NavLink className="nav-link" to="/user-details">User Details</NavLink>
+                                    </li>
+                                </React.Fragment>)}
+                            {!user &&
+                                (<React.Fragment>
+                                    <li className="nav-item">
+                                        <NavLink className="nav-link" to="/signin">Signin</NavLink>
+                                    </li>
+                                    <li className="nav-item">
+                                        <NavLink className="nav-link" to="/signup">Signup</NavLink>
+                                    </li>
+                                </React.Fragment>)}
                         </ul>
                     </div>
                 </div>

@@ -1,38 +1,57 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Switch, Route } from "react-router-dom"
 import './App.css';
 
 import Navbar from "./components/main-single-page/navbar";
 import Footer from "./components/main-single-page/footer";
+
+import userService from "./services/user-service"
+import MyStuff from "./components/data/my-stuff"
 import About from "./components/data/about"
-import Signup from "./components/auth/signup"
-import Signin from "./components/auth/signin"
+import Signin from "./components/user/signin"
+import Signup from "./components/user/signup"
+import UserDetails from "./components/user/user-details"
 
-function App() {
-  return (
-    <React.Fragment>
+class App extends Component {
+  state = {}
 
-      <header>
-        <Navbar />
-      </header>
+  componentDidMount() {
+    const user = userService.currentUser();
+    this.setState({ user });
+  }
 
-      <main style={{ minHeight: '900px' }}>
-        <Switch>
-          <Route path="/" exact component={About} />
-          <Route path="/signup" exact component={Signup} />
-          <Route path="/signin" exact componenet={Signin} />
-          <Route path="/about" exact component={About} />
-        </Switch>
-      </main>
 
-      <footer>
-        <Footer />
+  render() {
+    const { user } = this.state;
+    return (
+      <React.Fragment>
 
-      </footer>
+        <header>
+          <Navbar user={user} />
+        </header>
 
-    </React.Fragment>
+        <main style={{ minHeight: '900px' }}>
+          <Switch>
+            <Route path="/" exact component={user ? MyStuff : About} />
+            <Route path="/my-stuff" exact component={user ? MyStuff : About} />
+            <Route path="/about" exact component={About} />
+            <Route path="/signin" exact component={Signin} />
+            <Route path="/signup" exact component={Signup} />
+            <Route path="/user-details" exact component={UserDetails} />
+          </Switch>
+        </main>
 
-  );
+        <footer>
+          <Footer />
+        </footer>
+
+      </React.Fragment>
+
+    );
+
+
+
+  }
 }
 
 export default App;
