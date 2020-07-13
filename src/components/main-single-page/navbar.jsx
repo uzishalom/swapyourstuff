@@ -27,12 +27,11 @@ class Navbar extends Component {
 
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto">
-                            <li className="nav-item">
-                                <NavLink className="nav-link" to="/mystuff">My Stuff</NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink className="nav-link" to="/matchingstuff">Matching Stuff</NavLink>
-                            </li>
+                            {user && <React.Fragment>
+                                <li className="nav-item">
+                                    <NavLink className="nav-link" to="/my-stuff">My Stuff</NavLink>
+                                </li>
+                            </React.Fragment>}
                             <li className="nav-item">
                                 <NavLink className="nav-link" to="/search">Search For Stuff</NavLink>
                             </li>
