@@ -10,7 +10,7 @@ class Logout extends Component {
 
     async componentDidMount() {
         await userService.logout();
-        window.location = "/";
+        window.location = "/signin";
     }
 }
 
