@@ -3,6 +3,8 @@ import Joi from "joi-browser";
 import Input from "./input";
 
 class Form extends Component {
+    generalErrorMessage = "There was an error while executing your request, please try again"
+
     state = {
         data: {},
         errors: {},
@@ -78,6 +80,13 @@ class Form extends Component {
             />
         );
     }
+
+    showGeneralErrorMessage() {
+        const errors = { ...this.state.errors }
+        errors.general = this.generalErrorMessage;
+        this.setState({ errors })
+    }
+
 }
 
 export default Form;

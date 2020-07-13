@@ -8,6 +8,9 @@ import userService from "../../services/user-service"
 
 
 class Signup extends Form {
+
+    generalErrorMessage = "There was an error in the signup process, please try again"
+
     state = {
         data: { name: "", email: "", password: "", city: "", phone: "" },
         errors: {},
@@ -19,7 +22,11 @@ class Signup extends Form {
         email: Joi.string().required().email().label("Email"),
         password: Joi.string().required().min(6).max(10).label("Password"),
         city: Joi.string().required().label("City"),
-        phone: Joi.any()
+        phone: Joi.string().min(9).max(10).regex(/^0[2-9]\d{7,8}$/).allow("").error(() => {
+            return {
+                message: "Phone must be between 9-10 digits and starting with 0"
+            };
+        }),
     }
 
 
@@ -28,11 +35,6 @@ class Signup extends Form {
         const errors = { ...this.state.errors }
         delete errors.general;
         this.setState({ errors });
-
-        // handle erros in empty phone validation in the server
-        if (!data.phone) {
-            data.phone = " "
-        }
 
         // signup
         try {
@@ -44,9 +46,10 @@ class Signup extends Form {
 
             if (ex.response?.data?.error) {
                 this.handleSignupServerErrors(ex.response.data.error);
-                return
             }
             this.showGeneralErrorMessage();
+
+            return;
         }
 
         // login after successful signup
@@ -81,17 +84,6 @@ class Signup extends Form {
         this.showGeneralErrorMessage();
 
     }
-
-
-
-    showGeneralErrorMessage() {
-        const errors = { ...this.state.errors }
-        errors.general = "There was an error in the signup process, please try again"
-        this.setState({ errors })
-    }
-
-
-
 
     render() {
         return (
