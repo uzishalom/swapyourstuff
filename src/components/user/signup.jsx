@@ -86,16 +86,18 @@ class Signup extends Form {
     }
 
     render() {
+        const inputClassName = "col-lg-6 col-12"
+
         return (
             <div className="container">
                 <PageHeader title="Signup" />
                 <form onSubmit={this.handleSubmit} method="Post" className="form-group mt-5" auto-complete="off">
                     <div className="row">
-                        {this.renderInput(true, "name", "Name", "text", "Your Name")}
-                        {this.renderInput(true, "email", "Email", "email", "Your Email")}
-                        {this.renderInput(true, "password", "Password", "password", "Password")}
-                        {this.renderInput(true, "city", "City", "text", "City")}
-                        {this.renderInput(false, "phone", "Phone (optional)", "text", "Phone Number")}
+                        {this.renderInput(true, "name", "Name", "text", inputClassName, "Your Name")}
+                        {this.renderInput(true, "email", "Email", "email", inputClassName, "Your Email")}
+                        {this.renderInput(true, "password", "Password", "password", inputClassName, "Password")}
+                        {this.renderInput(true, "city", "City", "text", inputClassName, "City")}
+                        {this.renderInput(false, "phone", "Phone (optional)", "text", inputClassName, "Phone Number")}
                     </div>
                     <div>{this.state.inSubmitProcess ? <InProcessIndicator /> : this.renderButton("Signup")}</div>
                     <div className="text-danger mt-3">{this.state.errors.general}</div>

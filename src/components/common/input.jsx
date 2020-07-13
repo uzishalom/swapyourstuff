@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from "prop-types";
 
 
-const Input = ({ required = false, type = "text", name, title, errorMessage = "", placeholder = "", ...rest }) => {
+const Input = ({ required = false, type = "text", name, title, errorMessage = "", placeholder = "", className = "col-12", ...rest }) => {
     return (
-        <div className="form-group col-lg-6 col-12">
+        <div className={"form-group " + className}>
             <label className="d-none d-lg-block" htmlFor={name}><span className="text-danger">{required ? "* " : ""}</span>{title}</label>
             <input {...rest} type={type} id={name} name={name} className="form-control" placeholder={placeholder} />
             <span className="small text-danger">{errorMessage}</span>

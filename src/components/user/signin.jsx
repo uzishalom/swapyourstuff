@@ -69,17 +69,23 @@ class Signin extends Form {
 
 
     render() {
+        const inputClassName = "col-12";
         return (
             <div className="container">
                 <PageHeader title="Signin" />
-                <form onSubmit={this.handleSubmit} method="Post" className="form-group mt-5" auto-complete="off">
-                    <div className="row">
-                        {this.renderInput(true, "email", "Email", "email", "Your Email")}
-                        {this.renderInput(true, "password", "Password", "password", "Password")}
-                    </div>
-                    <div>{this.state.inSubmitProcess ? <InProcessIndicator /> : this.renderButton("Login")}</div>
-                    <div className="text-danger mt-3">{this.state.errors.general}</div>
-                </form>
+                <div className="row">
+                    <div className="col-lg-3"></div>
+                    <form onSubmit={this.handleSubmit} method="Post" className="form-group mt-5 col-lg-6" auto-complete="off">
+                        <div className="row">
+                            {this.renderInput(true, "email", "Email", "email", inputClassName, "Your Email")}
+                            {this.renderInput(true, "password", "Password", "password", inputClassName, "Password")}
+                        </div>
+                        <div>{this.state.inSubmitProcess ? <InProcessIndicator /> : this.renderButton("Login")}</div>
+                        <div className="text-danger mt-3">{this.state.errors.general}</div>
+                    </form>
+                    <div className="col-lg-3"></div>
+                </div>
+
             </div>
 
         );
