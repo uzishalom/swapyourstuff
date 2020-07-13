@@ -15,6 +15,10 @@ export const signin = async (credentials) => {
     localStorage.setItem(tokenKey, data.token);
 }
 
+export const logout = async () => {
+    await localStorage.removeItem(tokenKey);
+}
+
 export const currentUser = () => {
     try {
         const token = localStorage.getItem(tokenKey);
@@ -30,4 +34,5 @@ export default {
     signup,
     signin,
     currentUser,
+    logout,
 }

@@ -44,7 +44,7 @@ class Navbar extends Component {
                             {user &&
                                 (<React.Fragment>
                                     <li className="nav-item">
-                                        <NavLink className="nav-link" to="/signin">Logout</NavLink>
+                                        <NavLink className="nav-link" to="/logout">Logout</NavLink>
                                     </li>
                                     <li className="nav-item">
                                         <NavLink className="nav-link" to="/user-details">User Details</NavLink>
