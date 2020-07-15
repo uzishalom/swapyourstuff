@@ -27,8 +27,14 @@ export const getUserDetails = async () => {
     return data;
 }
 
-export const updateUser = (user) => {
-    httpClient.put(`${apiUrl}/users/updateuser`, user);
+export const updateUser = async (user) => {
+    const { data } = await httpClient.put(`${apiUrl}/users/updateuser`, user);
+    return data;
+}
+
+export const changePassword = async (user) => {
+    const { data } = await httpClient.put(`${apiUrl}/users/changepassword`, user);
+    return data;
 }
 
 export const currentUser = () => {
@@ -55,5 +61,6 @@ export default {
     forgotPassword,
     getUserDetails,
     updateUser,
+    changePassword,
     getToken,
 }

@@ -16,6 +16,7 @@ import Signin from "./components/user/signin"
 import Signup from "./components/user/signup"
 import Logout from "./components/user/logout"
 import UserDetails from "./components/user/user-details"
+import ChangePassword from "./components/user/change-password"
 
 
 class App extends Component {
@@ -48,6 +49,7 @@ class App extends Component {
             <Route exact path="/signup" component={user ? Home : Signup} />
             <Route exact path="/logout" component={user ? Logout : Home} />
             <Route exact path="/user-details" component={user ? UserDetails : Home} />
+            <Route exact path="/change-password" component={user ? ChangePassword : Home} />
             <Home />
           </Switch>
         </main>
