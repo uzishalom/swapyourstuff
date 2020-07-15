@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Switch, Route } from "react-router-dom"
 import './App.css';
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import Navbar from "./components/main-single-page/navbar";
 import Footer from "./components/main-single-page/footer";
 
@@ -31,6 +34,7 @@ class App extends Component {
       <React.Fragment>
 
         <header>
+          <ToastContainer />
           <Navbar user={user} />
         </header>
 

@@ -5,7 +5,7 @@ import PageHeader from "../common/page-header"
 import usersService from "../../services/user-service"
 
 class About extends Component {
-    state = {}
+    state = { user: null }
     render() {
         const { user } = this.state;
 
@@ -24,7 +24,7 @@ class About extends Component {
 
                             {user && (
                                 <React.Fragment>
-                                    <p>Let's check your <Link class="text-primary" to="/my-stuff">stuff</Link></p>
+                                    <p>Let's check your <Link className="text-primary" to="/my-stuff">stuff</Link></p>
                                 </React.Fragment>
                             )}
 
@@ -41,8 +41,8 @@ class About extends Component {
             </React.Fragment>);
     }
 
-    async componentDidMount() {
-        const user = await usersService.currentUser();
+    componentDidMount() {
+        const user = usersService.currentUser();
         if (user) {
             this.setState({ user });
         }

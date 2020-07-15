@@ -12,7 +12,7 @@ class Form extends Component {
     };
 
     validate = () => {
-        const options = { abortEarly: false };
+        const options = { abortEarly: false, allowUnknown: true };
         const { error } = Joi.validate(this.state.data, this.validationSchema, options);
         if (!error) return null;
 
@@ -64,7 +64,7 @@ class Form extends Component {
         );
     }
 
-    renderInput(required, name, title, type, className, placeholder = "") {
+    renderInput(required, name, title, type, className, placeholder) {
         const { data, errors } = this.state;
 
         return (
