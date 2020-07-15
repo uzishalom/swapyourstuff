@@ -1,5 +1,7 @@
 import React from 'react';
 import Joi from "joi-browser"
+import Swal from 'sweetalert2'
+
 
 import PageHeader from "../common/page-header"
 import InProcessIndicator from "../common/in-process-indicator"
@@ -67,6 +69,16 @@ class Signin extends Form {
         this.showGeneralErrorMessage();
     }
 
+    forgotPassword = () => {
+        const { email } = this.state.data;
+        userService.forgotPassword(email);
+        Swal.fire({
+            icon: 'info',
+            title: 'New Password Email',
+            html: `If <b>${email}</b> exists in our system, <br>
+            We will send an email with a new password`,
+        })
+    }
 
     render() {
         const inputClassName = "col-12";
@@ -80,7 +92,13 @@ class Signin extends Form {
                             {this.renderInput(true, "email", "Email", "email", inputClassName, "Your Email")}
                             {this.renderInput(true, "password", "Password", "password", inputClassName, "Password")}
                         </div>
-                        <div>{this.state.inSubmitProcess ? <InProcessIndicator /> : this.renderButton("Login")}</div>
+                        <div>
+                            {this.state.inSubmitProcess ? <InProcessIndicator /> :
+                                <React.Fragment>
+                                    {this.renderButton("Login")}
+                                    {this.state.data.email && !this.state.errors.email && <span className="text-primary float-right" style={{ cursor: "pointer" }} onClick={() => this.forgotPassword()}><u>I forgot my password</u></span>}
+                                </React.Fragment>}
+                        </div>
                         <div className="text-danger mt-3">{this.state.errors.general}</div>
                     </form>
                     <div className="col-lg-3"></div>

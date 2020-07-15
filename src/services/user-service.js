@@ -19,6 +19,10 @@ export const logout = async () => {
     await localStorage.removeItem(tokenKey);
 }
 
+export const forgotPassword = (email) => {
+    httpClient.put(`${apiUrl}/users/forgotpassword`, { email });
+}
+
 export const currentUser = () => {
     try {
         const token = localStorage.getItem(tokenKey);
@@ -35,4 +39,5 @@ export default {
     signin,
     currentUser,
     logout,
+    forgotPassword,
 }
