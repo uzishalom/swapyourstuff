@@ -18,8 +18,13 @@ export const logout = async () => {
     await localStorage.removeItem(tokenKey);
 }
 
-export const forgotPassword = (email) => {
-    httpClient.put(`${apiUrl}/users/forgotpassword`, { email });
+export const forgotPassword = async (email) => {
+    try {
+        await httpClient.put(`${apiUrl}/users/forgotpassword`, { email });
+    }
+    catch (ex) {
+        console.log("Failed To Send Forgot Password Email");
+    }
 }
 
 export const getUserDetails = async () => {

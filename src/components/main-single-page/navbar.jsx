@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { Link, NavLink } from "react-router-dom"
 
 import logo from "../../images/logo.png"
+import userService from "../../services/user-service";
 
 class Navbar extends Component {
-    state = {}
+    state = { userDetails: null }
     render() {
         const { user } = this.props;
 
@@ -29,14 +30,16 @@ class Navbar extends Component {
                         <ul className="navbar-nav mr-auto">
                             {user && <React.Fragment>
                                 <li className="nav-item">
-                                    <NavLink className="nav-link" to="/my-stuff">My Stuff</NavLink>
+                                    <NavLink className="nav-link" to="/my-stuff">
+                                        {this.state.userDetails ? `${this.state.userDetails.name} Stuff` : "My Stuff"}
+                                    </NavLink>
                                 </li>
                             </React.Fragment>}
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/search">Search For Stuff</NavLink>
+                                <NavLink className="nav-link" to="/search">Search</NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/about">Who Are We ?</NavLink>
+                                <NavLink className="nav-link" to="/about">About</NavLink>
                             </li>
                         </ul>
                         <ul className="navbar-nav ml-auto">
@@ -46,7 +49,7 @@ class Navbar extends Component {
                                         <NavLink className="nav-link" to="/logout">Logout</NavLink>
                                     </li>
                                     <li className="nav-item">
-                                        <NavLink className="nav-link" to="/user-details">User Details</NavLink>
+                                        <NavLink className="nav-link" to="/user-details">My Details</NavLink>
                                     </li>
                                     <li className="nav-item">
                                         <NavLink className="nav-link" to="/change-password">Change Password</NavLink>
@@ -66,6 +69,18 @@ class Navbar extends Component {
                 </div>
             </nav>
         );
+    }
+
+    async componentDidMount() {
+        if (this.props.user) {
+            try {
+                const userDetails = await userService.getUserDetails();
+                this.setState({ userDetails });
+            }
+            catch (ex) {
+                console.log(ex);
+            }
+        }
     }
 }
 

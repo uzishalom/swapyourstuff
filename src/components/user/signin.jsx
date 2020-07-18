@@ -1,6 +1,7 @@
 import React from 'react';
 import Joi from "joi-browser"
 import Swal from 'sweetalert2'
+import { Link } from "react-router-dom"
 
 
 import PageHeader from "../common/page-header"
@@ -69,15 +70,16 @@ class Signin extends Form {
         this.showGeneralErrorMessage();
     }
 
-    forgotPassword = () => {
+    forgotPassword = (e) => {
+        e.preventDefault();
         const { email } = this.state.data;
-        userService.forgotPassword(email);
         Swal.fire({
             icon: 'info',
             title: 'New Password Email',
             html: `If <b>${email}</b> exists in our system, <br>
             We will send an email with a new password`,
         })
+        userService.forgotPassword(email);
     }
 
     render() {
@@ -96,7 +98,7 @@ class Signin extends Form {
                             {this.state.inSubmitProcess ? <InProcessIndicator /> :
                                 <React.Fragment>
                                     {this.renderButton("Login")}
-                                    {this.state.data.email && !this.state.errors.email && <span className="text-primary float-right" style={{ cursor: "pointer" }} onClick={() => this.forgotPassword()}><u>I forgot my password</u></span>}
+                                    {this.state.data.email && !this.state.errors.email && <Link to="" className="text-primary float-right" onClick={(e) => this.forgotPassword(e)}><u>I forgot my password</u></Link>}
                                 </React.Fragment>}
                         </div>
                         <div className="text-danger mt-3">{this.state.errors.general}</div>

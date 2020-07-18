@@ -74,7 +74,7 @@ class UserDetails extends Form {
 
         return (
             <div className="container">
-                <PageHeader title="Your Details" description="" />
+                <PageHeader title="My Details" description="" />
                 <h4 className="text-center text-info mt-5">{data.email}</h4>
                 <form onSubmit={this.handleSubmit} method="Post" className="form-group mt-5" auto-complete="off">
                     <div className="row">
