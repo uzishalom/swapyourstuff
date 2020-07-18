@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { Link, NavLink } from "react-router-dom"
 
 import logo from "../../images/logo.png"
-import userService from "../../services/user-service";
 
 class Navbar extends Component {
-    state = { userDetails: null }
+    state = {}
     render() {
         const { user } = this.props;
 
@@ -30,9 +29,7 @@ class Navbar extends Component {
                         <ul className="navbar-nav mr-auto">
                             {user && <React.Fragment>
                                 <li className="nav-item">
-                                    <NavLink className="nav-link" to="/my-stuff">
-                                        {this.state.userDetails ? `${this.state.userDetails.name} Stuff` : "My Stuff"}
-                                    </NavLink>
+                                    <NavLink className="nav-link" to="/my-stuff">My Stuff </NavLink>
                                 </li>
                             </React.Fragment>}
                             <li className="nav-item">
@@ -69,18 +66,6 @@ class Navbar extends Component {
                 </div>
             </nav>
         );
-    }
-
-    async componentDidMount() {
-        if (this.props.user) {
-            try {
-                const userDetails = await userService.getUserDetails();
-                this.setState({ userDetails });
-            }
-            catch (ex) {
-                console.log(ex);
-            }
-        }
     }
 }
 
