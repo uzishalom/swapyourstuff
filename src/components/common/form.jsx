@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Joi from "joi-browser";
 import Input from "./input";
+import TextArea from "./textarea";
+import SelectBox from "./select-box";
 
 class Form extends Component {
     generalErrorMessage = "There was an error while executing your request, please try again"
@@ -56,6 +58,12 @@ class Form extends Component {
         this.setState({ data, errors });
     };
 
+    showGeneralErrorMessage() {
+        const errors = { ...this.state.errors }
+        errors.general = this.generalErrorMessage;
+        this.setState({ errors })
+    }
+
     renderButton(title) {
         return (
             <button disabled={this.validate()} className="btn btn-primary">
@@ -82,11 +90,59 @@ class Form extends Component {
         );
     }
 
-    showGeneralErrorMessage() {
-        const errors = { ...this.state.errors }
-        errors.general = this.generalErrorMessage;
-        this.setState({ errors })
+    renderTextarea(required, name, title, rows, cols, className, placeholder) {
+        const { data, errors } = this.state;
+
+        return (
+            <TextArea
+                required={required}
+                name={name}
+                value={data[name]}
+                title={title}
+                rows={rows}
+                cols={cols}
+                onChange={this.handleChange}
+                errorMessage={errors[name]}
+                placeholder={placeholder}
+                className={className}
+            />
+        );
     }
+
+    renderSelectBox(required, name, title, options, noSelectionTitle, className) {
+        const { data, errors } = this.state;
+
+        return (
+            <SelectBox
+                required={required}
+                name={name}
+                value={data[name]}
+                title={title}
+                options={options}
+                noSelectionTitle={noSelectionTitle}
+                onChange={this.handleChange}
+                errorMessage={errors[name]}
+                className={className}
+            />
+        );
+    }
+
+    renderFileUpload(className) {
+        return (
+            <div className={className}>
+                <label className="d-none d-lg-block" htmlFor="itemImage"><span className="text-danger">* </span>Upload Item Image</label>
+                <input type="file" id="itemImage" name="itemImage" onChange={this.handleChange} />
+            </div>
+
+        );
+    }
+
+    onItemFileNameChange(e) {
+
+    }
+
+
+
 
 }
 

@@ -10,6 +10,7 @@ import Footer from "./components/main-single-page/footer";
 
 import userService from "./services/user-service"
 import MyStuff from "./components/data/my-stuff"
+import AddItem from "./components/data/add-item"
 import Search from "./components/data/search"
 import About from "./components/data/about"
 import Signin from "./components/user/signin"
@@ -43,6 +44,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={user ? MyStuff : Home} />
             <Route exact path="/my-stuff" component={user ? MyStuff : Home} />
+            <Route exact path="/add-item" component={user ? AddItem : Home} />
             <Route exact path="/search" component={Search} />
             <Route exact path="/about" component={Home} />
             <Route exact path="/signin" component={user ? Home : Signin} />
