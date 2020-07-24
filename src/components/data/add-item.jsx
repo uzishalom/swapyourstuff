@@ -36,13 +36,14 @@ class AddItem extends Form {
 
         try {
             await this.setState({ inSubmitProcess: true });
-            await itemsService.AddItem(data);
+            await itemsService.addItem(data);
         }
         catch (ex) {
+            console.log(ex);
             await this.setState({ inSubmitProcess: false });
-
             if (ex.response?.data?.error) {
                 this.handleServerErrors(ex.response.data.error);
+                return;
             }
             this.showGeneralErrorMessage();
             return;
