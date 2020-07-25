@@ -79,7 +79,7 @@ class AddItem extends Form {
 
 
     validateFile() {
-        if (!this.fileToUpload) return true;
+        if (!this.fileToUpload) return "";
         const fileType = path.extname(this.fileToUpload.name).toLowerCase();
         if (!this.allowedFileTypes.includes(fileType)) {
             return "Unsupported File Format";
@@ -126,7 +126,7 @@ class AddItem extends Form {
                             {this.renderInput(true, "title", "Title", "text", inputClassName, "Item Title")}
                             {this.renderTextarea(true, "description", "Description", "10", "50", inputClassName, "Detailed Description")}
                             {this.renderSelectBox(true, "categoryId", "Category", this.state.categories, "Choose Category...", inputClassName)}
-                            {this.renderFileUpload(true, "image", `Upload Item Image (Up to ${this.maxFileSize}MB in ${this.allowedFileTypesToShow} formats)`, this.allowedFileTypes, inputClassName)}
+                            {this.renderFileUpload(false, "image", `Upload Item Image (Up to ${this.maxFileSize}MB in ${this.allowedFileTypesToShow} formats)`, this.allowedFileTypes, inputClassName)}
                             <div className="mt-3">{this.state.inSubmitProcess ? <InProcessIndicator /> : this.renderButton("Save")}</div>
                             <div className="text-danger mt-3">{this.state.errors.general}</div>
                         </div>
