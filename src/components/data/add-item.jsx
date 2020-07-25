@@ -1,5 +1,7 @@
 import React from 'react';
 import Joi from "joi-browser";
+import { toast } from 'react-toastify';
+import path from "path";
 
 import Form from "../common/form";
 import PageHeader from "../common/page-header";
@@ -8,7 +10,11 @@ import itemsService from "../../services/items-service"
 
 
 class AddItem extends Form {
-    generalErrorMessage = "There was an error in adding the new item to your stuff, please try again"
+    generalErrorMessage = "There was an error in adding the new item to your stuff, please try again";
+    allowedFileTypes = ".gif,.png,.jpeg,.jpg";
+    allowedFileTypesToShow = this.allowedFileTypes.split('.').join(' ');
+    fileToUpload = null;
+    maxFileSize = 10;
 
     state = {
         data: { title: "", description: "", categoryId: "", image: "" },
@@ -28,6 +34,15 @@ class AddItem extends Form {
         image: Joi.any()
     }
 
+
+    // called from the parent Form
+    additionalInputChangeHandling(input) {
+        if (input.type === "file") {
+            this.fileToUpload = input.files.length === 0 ? null : input.files[0];
+        }
+    }
+
+
     submit = async () => {
         const data = { ...this.state.data }
         const errors = { ...this.state.errors }
@@ -36,7 +51,18 @@ class AddItem extends Form {
 
         try {
             await this.setState({ inSubmitProcess: true });
-            await itemsService.addItem(data);
+
+            const fileValidationError = this.validateFile();
+            if (fileValidationError) {
+                await this.setState({ inSubmitProcess: false });
+                this.showFileErrorMessage(fileValidationError);
+                return;
+            }
+
+            await itemsService.addItem(data, this.fileToUpload);
+            toast.success(`The "${data.title}" item was added successfully`);
+            this.props.history.goBack();
+
         }
         catch (ex) {
             console.log(ex);
@@ -52,6 +78,18 @@ class AddItem extends Form {
 
 
 
+    validateFile() {
+        if (!this.fileToUpload) return true;
+        const fileType = path.extname(this.fileToUpload.name).toLowerCase();
+        if (!this.allowedFileTypes.includes(fileType)) {
+            return "Unsupported File Format";
+        }
+        if (this.fileToUpload.size > this.maxFileSize * 1048576) {
+            return "File size is too big";
+        }
+        return "";
+    }
+
     handleServerErrors(errorData) {
         const errors = { ...this.state.errors }
 
@@ -60,10 +98,19 @@ class AddItem extends Form {
             this.setState({ errors })
             return;
         }
-
         this.showGeneralErrorMessage();
-
     }
+
+
+    showFileErrorMessage(message) {
+        const errors = { ...this.state.errors }
+        errors.image = message;
+        this.setState({ errors })
+    }
+
+
+
+
 
     render() {
         const inputClassName = "";
@@ -79,6 +126,7 @@ class AddItem extends Form {
                             {this.renderInput(true, "title", "Title", "text", inputClassName, "Item Title")}
                             {this.renderTextarea(true, "description", "Description", "10", "50", inputClassName, "Detailed Description")}
                             {this.renderSelectBox(true, "categoryId", "Category", this.state.categories, "Choose Category...", inputClassName)}
+                            {this.renderFileUpload(true, "image", `Upload Item Image (Up to ${this.maxFileSize}MB in ${this.allowedFileTypesToShow} formats)`, this.allowedFileTypes, inputClassName)}
                             <div className="mt-3">{this.state.inSubmitProcess ? <InProcessIndicator /> : this.renderButton("Save")}</div>
                             <div className="text-danger mt-3">{this.state.errors.general}</div>
                         </div>

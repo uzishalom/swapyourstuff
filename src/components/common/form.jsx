@@ -3,6 +3,7 @@ import Joi from "joi-browser";
 import Input from "./input";
 import TextArea from "./textarea";
 import SelectBox from "./select-box";
+import FileUpload from "./file-upload";
 
 class Form extends Component {
     generalErrorMessage = "There was an error while executing your request, please try again"
@@ -56,7 +57,12 @@ class Form extends Component {
         data[input.name] = input.value;
 
         this.setState({ data, errors });
+
+        if (this.additionalInputChangeHandling) {
+            this.additionalInputChangeHandling(input)
+        }
     };
+
 
     showGeneralErrorMessage() {
         const errors = { ...this.state.errors }
@@ -127,13 +133,20 @@ class Form extends Component {
         );
     }
 
-    renderFileUpload(className) {
-        return (
-            <div className={className}>
-                <label className="d-none d-lg-block" htmlFor="itemImage"><span className="text-danger">* </span>Upload Item Image</label>
-                <input type="file" id="itemImage" name="itemImage" onChange={this.handleChange} />
-            </div>
+    renderFileUpload(required, name, title, accept, className) {
+        const { data, errors } = this.state;
 
+        return (
+            <FileUpload
+                required={required}
+                name={name}
+                value={data[name]}
+                title={title}
+                accept={accept}
+                onChange={this.handleChange}
+                errorMessage={errors[name]}
+                className={className}
+            />
         );
     }
 
