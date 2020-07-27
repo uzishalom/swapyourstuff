@@ -43,7 +43,7 @@ class Form extends Component {
 
     };
 
-    handleChange = ({ currentTarget: input }) => {
+    handleChange = async ({ currentTarget: input }) => {
         const errors = { ...this.state.errors };
         const errorMessage = this.validateProperty(input);
         if (errorMessage) {
@@ -56,7 +56,7 @@ class Form extends Component {
         const data = { ...this.state.data };
         data[input.name] = input.value;
 
-        this.setState({ data, errors });
+        await this.setState({ data, errors });
 
         if (this.additionalInputChangeHandling) {
             this.additionalInputChangeHandling(input)
@@ -70,9 +70,24 @@ class Form extends Component {
         this.setState({ errors })
     }
 
+    handleCancel = e => {
+        e.preventDefault();
+        this.props.history.goBack();
+    };
+
+
+
     renderButton(title) {
         return (
             <button disabled={this.validate()} className="btn btn-primary">
+                {title}
+            </button>
+        );
+    }
+
+    renderCancelButton(title) {
+        return (
+            <button className="btn btn-secondary" onClick={this.handleCancel}>
                 {title}
             </button>
         );
@@ -115,7 +130,7 @@ class Form extends Component {
         );
     }
 
-    renderSelectBox(required, name, title, options, noSelectionTitle, className) {
+    renderSelectBox(required, name, title, options, noSelectionTitle, className, defaultSelectedValue) {
         const { data, errors } = this.state;
 
         return (
@@ -124,6 +139,7 @@ class Form extends Component {
                 name={name}
                 value={data[name]}
                 title={title}
+                defaultSelectedValue={defaultSelectedValue}
                 options={options}
                 noSelectionTitle={noSelectionTitle}
                 onChange={this.handleChange}

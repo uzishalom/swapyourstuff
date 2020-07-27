@@ -3,6 +3,8 @@ import { apiUrl } from "../config/config.json";
 import path from "path";
 
 
+
+
 export const addItem = async (data, fileToUpload) => {
 
     // save details
@@ -30,8 +32,14 @@ export const getCategories = async () => {
     return data.categories;
 }
 
+export const getUserItems = async () => {
+    const { data } = await httpClient.get(`${apiUrl}/items/useritems`);
+    return data.userItems;
+}
+
 
 export default {
     addItem,
     getCategories,
+    getUserItems,
 }
