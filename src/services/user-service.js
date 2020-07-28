@@ -32,6 +32,12 @@ export const getUserDetails = async () => {
     return data;
 }
 
+export const getUserById = async (userId) => {
+    const { data } = await httpClient.get(`${apiUrl}/users/${userId}`);
+    return data;
+}
+
+
 export const updateUser = async (user) => {
     const { data } = await httpClient.put(`${apiUrl}/users/updateuser`, user);
     return data;
@@ -52,6 +58,7 @@ export const currentUser = () => {
     }
 }
 
+
 export const getToken = () => {
     return localStorage.getItem(tokenKey);
 }
@@ -65,6 +72,7 @@ export default {
     logout,
     forgotPassword,
     getUserDetails,
+    getUserById,
     updateUser,
     changePassword,
     getToken,

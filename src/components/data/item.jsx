@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom"
 
 import { apiUrl } from "../../config/config.json"
 
@@ -21,19 +22,28 @@ class Item extends Component {
                 <div className="card card border-secondary">
                     {item.image && <img className="card-img-top item-image" src={apiUrl + "/" + item.image} alt="Item" style={{ cursor: "pointer" }} onClick={this.showLargeImage} />}
                     {!item.image && <div className="text-center"><h1 className="text-secondary bg-light border py-5" ><i className="fas fa-camera fa-4x"></i></h1></div>}
+
                     <div className="card-body">
-                        <h5 className="card-title"><i className="fas fa-user" title="Show User Details"></i> {item.title} </h5>
+                        <h5 className="card-title">{this.props.showUser && <span><Link to="" onClick={this.props.onShowUserDetails}><i className="fas fa-user" title="View User Details" /></Link> </span>}     {item.title} </h5>
+
                         <p className="card-text">{item.description}</p>
                     </div>
+
                     <ul className="list-group list-group-flush">
                         <li className="list-group-item">Category: {this.props.categoryName}</li>
+
                         <li className="list-group-item">Status: {item.swapped ? 'Allready Swapped' : 'Not Swapped Yet'}</li>
+
                         <li className="list-group-item">Number of Interested Users: {item.numOfInterestedUsers}</li>
+
                         <li className="list-group-item">Last updated on: : {item.lastUpdatedAt}</li>
                     </ul>
+
                     <div className="card-body">
                         <a href="#" className="card-link">Favorite</a>
+
                         <a href="#" className="card-link">Edit</a>
+
                         <a href="#" className="card-link">Delete</a>
                     </div>
                 </div>

@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import Joi from "joi-browser";
-
+import Swal from 'sweetalert2'
 
 import PageHeader from "../common/page-header"
 import itemsService from "../../services/items-service"
+import userService from "../../services/user-service"
 import Form from "../common/form"
 import InProcessIndicator from "../common/in-process-indicator";
 import Item from "./item"
@@ -74,6 +75,50 @@ class MyStuff extends Form {
 
     }
 
+    showUserDetails = async (userId) => {
+        let user = null;
+        try {
+            user = await userService.getUserById(userId);
+        }
+        catch (ex) {
+            console.log(ex);
+        }
+
+        if (!user) {
+            Swal.fire({
+                icon: "error",
+                title: 'Oops ...',
+                html: `<div class="text-left">We are sorry, but we can not show the user details at the moment.</div>`,
+                confirmButtonColor: '#f27474'
+            });
+            return;
+        }
+
+        Swal.fire({
+            title: '<span class="text-info"><u>User Details</u></span>',
+            html: `
+            <div class="text-left">
+            <div><b>Name: </b>${user.name}</divWe>
+            <div><b>Email: </b><a href = "mailto:${user.email}">${user.email}</a> </div>
+            <div><b>Phone: </b><a href = "tel:${user.phone}">${user.phone}</a></div>
+           <div><b>City: </b> ${user.city}</div>
+           </div>
+        `,
+        })
+    }
+
+    showInterestedUsersDetails = (itemId) => {
+
+    }
+
+    addToInterestingItems = (itemId) => {
+
+    }
+
+    changeSwapStatus = (itemId) => {
+
+    }
+
 
     render() {
         const criteriaClassName = "col-lg-3";
@@ -102,11 +147,15 @@ class MyStuff extends Form {
                                     showUpdate={true}
                                     showDelete={true}
                                     showUser={false}
-                                    showInterestedUsersDetails={true}
-                                    showChangeSwapStatus={true}
                                     showInterestedInItemAsLink={false}
+                                    showChangeSwapStatus={true}
                                     onUpdate={() => this.updateItem(item._id)}
                                     onDelete={() => this.deleteItem(item._id)}
+                                    onShowUserDetails={() => this.showUserDetails(item.userId)}
+                                    onShowInterestedUsersDetails={() => this.showInterestedUsersDetails(item._id)}
+                                    onAddToInterestingItems={() => this.addToInterestingItems(item._id)}
+                                    onChangeSwapStatus={() => this.changeSwapStatus(item._id)}
+
                                 >
                                 </Item>
                             </div>
