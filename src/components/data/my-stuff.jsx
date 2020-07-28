@@ -6,32 +6,22 @@ import Joi from "joi-browser";
 import PageHeader from "../common/page-header"
 import itemsService from "../../services/items-service"
 import Form from "../common/form"
+import Item from "./item"
+import { yesOption, noOption, hasImageOptions, swappedOptions } from "../../config/definitions"
 
 
 
 class MyStuff extends Form {
     allUserItems = [];
-
-    yesOption = "Yes";
-    noOption = "No";
+    categoryIdToNameArray = [];
 
     state = {
-        data: { title: "", categoryId: "", hasImage: "", swapped: this.noOption },
+        data: { title: "", categoryId: "", hasImage: "", swapped: noOption },
         errors: {},
         inSubmitProcess: false,
         categories: [],
         filteredUserItems: [],
     }
-
-    hasImageOptions = [
-        { value: this.yesOption, title: "Has Image" },
-        { value: this.noOption, title: "Without Image" },
-    ];
-
-    swappedOptions = [
-        { value: this.noOption, title: "Not Swappeed Yet" },
-        { value: this.yesOption, title: "Allready Swapped" },
-    ];
 
 
     validationSchema = {
@@ -61,17 +51,25 @@ class MyStuff extends Form {
 
         if (hasImage) {
             filteredUserItems = filteredUserItems.filter(item =>
-                (hasImage === this.yesOption && item.image !== "") || (hasImage === this.noOption && item.image === "")
+                (hasImage === yesOption && item.image !== "") || (hasImage === noOption && item.image === "")
             );
         }
 
         if (swapped) {
             filteredUserItems = filteredUserItems.filter(item =>
-                (swapped === this.yesOption && item.swapped) || (swapped === this.noOption && !item.swapped)
+                (swapped === yesOption && item.swapped) || (swapped === noOption && !item.swapped)
             );
         }
 
         this.setState({ filteredUserItems });
+    }
+
+    updateItem = (itemId) => {
+
+    }
+
+    deleteItem = (itemId) => {
+
     }
 
 
@@ -86,20 +84,35 @@ class MyStuff extends Form {
                     <div className="row">
                         {this.renderInput(false, "title", "Search By Title", "text", criteriaClassName, "Search By Title")}
                         {this.renderSelectBox(false, "categoryId", "Category", this.state.categories, "Serach By  Category", criteriaClassName, this.state.categoryId)}
-                        {this.renderSelectBox(false, "hasImage", "Image", this.hasImageOptions, "Image", criteriaClassName, this.state.hasImage)}
-                        {this.renderSelectBox(false, "swapped", "Status", this.swappedOptions, "Status", criteriaClassName, this.state.swapped)}
+                        {this.renderSelectBox(false, "hasImage", "Image", hasImageOptions, "Image", criteriaClassName, this.state.hasImage)}
+                        {this.renderSelectBox(false, "swapped", "Status", swappedOptions, "Status", criteriaClassName, this.state.swapped)}
                     </div>
                     <div className="mt-5">
                         <Link className="btn btn-primary d-none d-lg-inline" to="/add-item">Add New Item</Link>
                     </div>
                 </div>
-
-
-
-
+                <div className="container mt-3">
+                    <div className="row">
+                        {this.state.filteredUserItems.map(item =>
+                            <div key={item._id} className="col-lg-4 px-3 py-3">
+                                <Item item={item}
+                                    categoryName={this.categoryIdToNameArray[item.categoryId]}
+                                    showUpdate={true}
+                                    showDelete={true}
+                                    showUser={false}
+                                    showInterestedUsersDetails={true}
+                                    showChangeSwapStatus={true}
+                                    showInterestedInItemAsLink={false}
+                                    onUpdate={() => this.updateItem(item._id)}
+                                    onDelete={() => this.deleteItem(item._id)}
+                                >
+                                </Item>
+                            </div>
+                        )}
+                    </div>
+                </div>
 
             </React.Fragment>
-
         );
     }
 
@@ -108,14 +121,18 @@ class MyStuff extends Form {
         try {
             const data = await itemsService.getCategories();
             // map the object array to fit select box internal object structure
-            const categories = data.map(category => { return { value: category._id, title: category.title } });
+            const categories = data.map(category => {
+                this.categoryIdToNameArray[category._id] = category.title;
+
+                return { value: category._id, title: category.title }
+            });
             this.setState({ categories });
         }
         catch (ex) {
             console.log(ex);
         }
 
-        // Get all user items
+        // Get all user items.
         try {
             this.allUserItems = await itemsService.getUserItems();
             this.filterData();
