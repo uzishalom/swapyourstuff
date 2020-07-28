@@ -4,7 +4,7 @@ import Joi from "joi-browser";
 
 import PageHeader from "../common/page-header"
 import itemsService from "../../services/items-service"
-import userService from "../../services/user-service"
+// import userService from "../../services/user-service" YYYYYYYYYY
 import Form from "../common/form"
 import InProcessIndicator from "../common/in-process-indicator";
 import Item from "./item"
@@ -15,6 +15,7 @@ import { yesOption, noOption, hasImageOptions, swappedOptions } from "../../conf
 class MyStuff extends Form {
     allUserItems = [];
     categoryIdToNameArray = [];
+    // selectedItems = [] // YYYYYYYY
 
     state = {
         data: { title: "", categoryId: "", hasImage: "", swapped: noOption },
@@ -66,17 +67,30 @@ class MyStuff extends Form {
         this.setState({ filteredUserItems });
     }
 
-    updateItem = (itemId) => {
+
+    // YYYYYYYYYY
+    /*
+    changeItemSelection = (itemId) => {
+        const indexToRemove = this.selectedItems.indexOf(itemId);
+        if (indexToRemove > -1) {
+            this.selectedItems.splice(indexToRemove, 1);
+        }
+        else {
+            this.selectedItems.push(itemId);
+        }
 
     }
+    */
 
-    deleteItem = (itemId) => {
+    /*
 
-    }
 
+    // YYYYYYYYYY
     showUserDetails = async (userId) => {
         userService.showUserDetailsPopup(userId);
     }
+
+    */
 
     showInterestedUsersDetails = (itemId) => {
 
@@ -89,6 +103,16 @@ class MyStuff extends Form {
     changeSwapStatus = (itemId) => {
 
     }
+
+    updateItem = (itemId) => {
+
+    }
+
+    deleteItem = (itemId) => {
+
+    }
+
+
 
 
     render() {
@@ -114,19 +138,28 @@ class MyStuff extends Form {
                         {this.state.filteredUserItems.map(item =>
                             <div key={item._id} className="col-lg-4 px-3 py-3">
                                 <Item item={item}
+                                    //showItemSelection={false}  // YYYYYYYYYY
+                                    //onItemSelectionChanged={() => this.changeItemSelection(item._id)}  // YYYYYYYYYY
+
+                                    //showUser={false} // YYYYYYYYYY
+                                    //onShowUserDetails={() => this.showUserDetails(item.userId)}  // YYYYYYYYYY
+
                                     categoryName={this.categoryIdToNameArray[item.categoryId]}
-                                    showUpdate={true}
-                                    showDelete={true}
-                                    showUser={false}
-                                    showInterestedInItemAsLink={false}
+
                                     showChangeSwapStatus={true}
-                                    onUpdate={() => this.updateItem(item._id)}
-                                    onDelete={() => this.deleteItem(item._id)}
-                                    onShowUserDetails={() => this.showUserDetails(item.userId)}
-                                    onShowInterestedUsersDetails={() => this.showInterestedUsersDetails(item._id)}
-                                    onAddToInterestingItems={() => this.addToInterestingItems(item._id)}
                                     onChangeSwapStatus={() => this.changeSwapStatus(item._id)}
 
+                                    showInterestedUsersAsLink={true}
+                                    onShowInterestedUsersDetails={() => this.showInterestedUsersDetails(item._id)}
+
+                                    showAddToInterestingItems={true}
+                                    onAddToInterestingItems={() => this.addToInterestingItems(item._id)}
+
+                                    showUpdate={true}
+                                    onUpdate={() => this.updateItem(item._id)}
+
+                                    showDelete={true}
+                                    onDelete={() => this.deleteItem(item._id)}
                                 >
                                 </Item>
                             </div>
