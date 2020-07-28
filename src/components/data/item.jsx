@@ -24,19 +24,19 @@ class Item extends Component {
                     {!item.image && <div className="text-center"><h1 className="text-secondary bg-light border py-5" ><i className="fas fa-camera fa-4x"></i></h1></div>}
 
                     <div className="card-body">
-                        <h5 className="card-title">{this.props.showUser && <span><Link to="" onClick={this.props.onShowUserDetails}><i className="fas fa-user" title="View User Details" /></Link> </span>}     {item.title} </h5>
+                        <h3 className="card-title">{this.props.showUser && <span><Link to="" onClick={this.props.onShowUserDetails}><i className="fas fa-user" title="View User Details" /></Link> </span>}     {item.title} </h3>
 
                         <p className="card-text">{item.description}</p>
                     </div>
 
                     <ul className="list-group list-group-flush">
-                        <li className="list-group-item">Category: {this.props.categoryName}</li>
+                        <li className="list-group-item"><b>Category: </b>{this.props.categoryName}</li>
 
-                        <li className="list-group-item">Status: {item.swapped ? 'Allready Swapped' : 'Not Swapped Yet'}</li>
+                        <li className="list-group-item"><b>Status: </b>{item.swapped ? 'Allready Swapped' : 'Not Swapped Yet'}</li>
 
-                        <li className="list-group-item">Number of Interested Users: {item.numOfInterestedUsers}</li>
+                        <li className="list-group-item"><b>Interested Users: </b>{item.numOfInterestedUsers}</li>
 
-                        <li className="list-group-item">Last updated on: : {item.lastUpdatedAt}</li>
+                        <li className="list-group-item"><b>Last update: </b>{item.lastUpdatedAt}</li>
                     </ul>
 
                     <div className="card-body">
