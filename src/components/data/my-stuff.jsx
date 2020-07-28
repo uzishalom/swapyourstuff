@@ -6,6 +6,7 @@ import Joi from "joi-browser";
 import PageHeader from "../common/page-header"
 import itemsService from "../../services/items-service"
 import Form from "../common/form"
+import InProcessIndicator from "../common/in-process-indicator";
 import Item from "./item"
 import { yesOption, noOption, hasImageOptions, swappedOptions } from "../../config/definitions"
 
@@ -21,6 +22,7 @@ class MyStuff extends Form {
         inSubmitProcess: false,
         categories: [],
         filteredUserItems: [],
+        inLoadingProcess: true,
     }
 
 
@@ -92,7 +94,7 @@ class MyStuff extends Form {
                     </div>
                 </div>
                 <div className="container mt-3">
-                    <div className="row">
+                    {!this.state.inLoadingProcess && this.state.filteredUserItems.length > 0 && <div className="row">
                         {this.state.filteredUserItems.map(item =>
                             <div key={item._id} className="col-lg-4 px-3 py-3">
                                 <Item item={item}
@@ -109,7 +111,14 @@ class MyStuff extends Form {
                                 </Item>
                             </div>
                         )}
-                    </div>
+                    </div>}
+                    {!this.state.inLoadingProcess && this.state.filteredUserItems.length === 0 &&
+                        <div className="text-center mt-5 text-info"><h3>No Items Found</h3></div>
+                    }
+                    {this.state.inLoadingProcess &&
+                        <div className="text-center mt-5 text-info"><h3><InProcessIndicator /></h3></div>
+                    }
+
                 </div>
 
             </React.Fragment>
@@ -140,6 +149,8 @@ class MyStuff extends Form {
         catch (ex) {
             console.log(ex);
         }
+
+        this.setState({ inLoadingProcess: false })
     }
 
 }
