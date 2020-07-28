@@ -1,6 +1,9 @@
 import httpClient from "./api-client";
 import { apiUrl } from "../config/config.json";
+
 import jwtDecode from "jwt-decode";
+import Swal from 'sweetalert2'
+
 
 
 const tokenKey = "token";
@@ -58,6 +61,39 @@ export const currentUser = () => {
     }
 }
 
+export const showUserDetailsPopup = async (userId) => {
+    let user = null;
+    try {
+        user = await getUserById(userId);
+    }
+    catch (ex) {
+        console.log(ex);
+    }
+
+    if (!user) {
+        Swal.fire({
+            icon: "error",
+            title: 'Oops ...',
+            html: `<div class="text-left">We are sorry, but we can not show the user details at the moment.</div>`,
+            confirmButtonColor: '#f27474'
+        });
+        return;
+    }
+
+    Swal.fire({
+        title: '<span class="text-info"><u>User Details</u></span>',
+        html: `
+        <div class="text-left">
+        <div><b>Name: </b>${user.name}</divWe>
+        <div><b>Email: </b><a href = "mailto:${user.email}">${user.email}</a> </div>
+        <div><b>Phone: </b><a href = "tel:${user.phone}">${user.phone}</a></div>
+       <div><b>City: </b> ${user.city}</div>
+       </div>
+    `,
+    })
+
+}
+
 
 export const getToken = () => {
     return localStorage.getItem(tokenKey);
@@ -75,5 +111,6 @@ export default {
     getUserById,
     updateUser,
     changePassword,
+    showUserDetailsPopup,
     getToken,
 }
