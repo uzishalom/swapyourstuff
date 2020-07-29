@@ -92,15 +92,24 @@ class MyStuff extends Form {
 
     */
 
+    changeSwapStatus = async (item) => {
+        try {
+            item.swapped = !item.swapped;
+            await itemsService.updateItem(item, null);
+            this.filterData();
+        }
+        catch (ex) {
+            console.log(ex);
+        }
+    }
+
+
+
     showInterestedUsersDetails = (itemId) => {
 
     }
 
     addToInterestingItems = (itemId) => {
-
-    }
-
-    changeSwapStatus = (itemId) => {
 
     }
 
@@ -147,7 +156,7 @@ class MyStuff extends Form {
                                     categoryName={this.categoryIdToNameArray[item.categoryId]}
 
                                     showChangeSwapStatus={true}
-                                    onChangeSwapStatus={() => this.changeSwapStatus(item._id)}
+                                    onChangeSwapStatus={() => this.changeSwapStatus(item)}
 
                                     showInterestedUsersAsLink={true}
                                     onShowInterestedUsersDetails={() => this.showInterestedUsersDetails(item._id)}

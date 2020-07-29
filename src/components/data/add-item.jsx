@@ -125,7 +125,7 @@ class AddItem extends Form {
                         <div className="col-lg-6 col-12">
                             {this.renderInput(true, "title", "Title", "text", inputClassName, "Item Title")}
                             {this.renderTextarea(true, "description", "Description", "10", "50", inputClassName, "Detailed Description")}
-                            {this.renderSelectBox(true, "categoryId", "Category", this.state.categories, "Choose Category...", inputClassName, "")}
+                            {this.renderSelectBox(true, "categoryId", "Category", this.state.categories, "Choose Category...", inputClassName, this.state.categoryId)}
                             {this.renderFileUpload(false, "image", `Upload Item Image (Up to ${this.maxFileSize}MB in ${this.allowedFileTypesToShow} formats)`, this.allowedFileTypes, inputClassName)}
                             <div className="mt-3">
                                 {this.state.inSubmitProcess ? <InProcessIndicator /> : this.renderButton("Save")}

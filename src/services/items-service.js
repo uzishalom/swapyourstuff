@@ -21,9 +21,31 @@ export const addItem = async (data, fileToUpload) => {
                 'fileExt': path.extname(fileToUpload.name).toLowerCase(),
             }
         };
-        await httpClient.post(`${apiUrl}/items/uploaditemimage`, formData, reqDetails);
+        await httpClient.put(`${apiUrl}/items/uploaditemimage`, formData, reqDetails);
     }
 }
+
+export const updateItem = async (data, fileToUpload) => {
+
+    // save details
+    const response = await httpClient.put(`${apiUrl}/items/updateitem`, data);
+
+    //upload image
+    if (fileToUpload) {
+        const formData = new FormData();
+        formData.append("file", fileToUpload);
+        const reqDetails = {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'itemId': response.data.newItemId,
+                'fileExt': path.extname(fileToUpload.name).toLowerCase(),
+            }
+        };
+        await httpClient.put(`${apiUrl}/items/uploaditemimage`, formData, reqDetails);
+    }
+}
+
+
 
 
 
@@ -40,6 +62,7 @@ export const getUserItems = async () => {
 
 export default {
     addItem,
+    updateItem,
     getCategories,
     getUserItems,
 }

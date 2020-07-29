@@ -2,10 +2,15 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom"
 
 import { apiUrl } from "../../config/config.json"
+import { swapTitles } from "../../config/definitions"
+
 
 
 class Item extends Component {
-    state = { showLargeImage: false }
+    state = {
+        showLargeImage: false,
+        swapped: true,
+    }
 
     showLargeImage = async () => {
         await this.setState({ showLargeImage: true })
@@ -14,6 +19,12 @@ class Item extends Component {
     hideLargeImage = async () => {
         await this.setState({ showLargeImage: false })
     }
+
+    updateSwapStatus = async () => {
+        await this.setState({ swapped: !this.props.item.swapped })
+        this.props.onChangeSwapStatus();
+    }
+
 
     render() {
         const { item } = this.props;
@@ -34,7 +45,9 @@ class Item extends Component {
                         <ul className="list-group list-group-flush border">
                             <li className="list-group-item"><b>Category: </b>{this.props.categoryName}</li>
 
-                            <li className="list-group-item"><b>Status: </b>{item.swapped ? 'Allready Swapped' : 'Not Swapped Yet'}</li>
+                            <li className="list-group-item"><b>Status: </b>{this.state.swapped ? swapTitles.swapped : swapTitles.notSwapped}
+                                {this.props.showChangeSwapStatus && !this.state.swapped && <button className="btn btn-sm btn-outline-success float-right ml-auto" onClick={this.updateSwapStatus}>Set as Swapped</button>}
+                            </li>
 
                             <li className="list-group-item"><b>Interested Users: </b>{item.numOfInterestedUsers}</li>
 
@@ -61,6 +74,10 @@ class Item extends Component {
 
             </React.Fragment>
         );
+    }
+
+    componentDidMount() {
+        this.setState({ swapped: this.props.item.swapped });
     }
 }
 
