@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import moment from "moment";
 
 import { apiUrl } from "../../config/config.json"
 import { swapTitles } from "../../config/definitions"
@@ -55,7 +56,7 @@ class Item extends Component {
                                     item.numOfInterestedUsers}
                             </li>
 
-                            <li className="list-group-item"><b>Last update: </b>{item.lastUpdatedAt}</li>
+                            <li className="list-group-item"><b>Last update: </b>{moment(item.lastUpdatedAt).calendar()}</li>
                         </ul>
 
                         <div className="card-body border">
