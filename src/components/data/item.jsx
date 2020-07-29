@@ -27,7 +27,7 @@ class Item extends Component {
                     <div className="card-body">
                         <h3 className="card-title">{this.props.showUser && <span><Link to="" onClick={this.props.onShowUserDetails}><i className="fas fa-user" title="View User Details" /></Link> </span>}     {item.title} </h3>
 
-                        <p className="card-text">{item.description}</p>
+                        <p className="card-text long-text">{item.description}</p>
                     </div>
 
                     <ul className="list-group list-group-flush">
