@@ -49,7 +49,11 @@ class Item extends Component {
                                 {this.props.showChangeSwapStatus && !this.state.swapped && <button className="btn btn-sm btn-outline-success float-right ml-auto" onClick={this.updateSwapStatus}>Set as Swapped</button>}
                             </li>
 
-                            <li className="list-group-item"><b>Interested Users: </b>{item.numOfInterestedUsers}</li>
+                            <li className="list-group-item"><b>Interested Users: </b>
+                                {this.props.showInterestedUsersAsLink && item.numOfInterestedUsers > 0 ?
+                                    <Link to={`/interested-in-item/${item._id}`}>{item.numOfInterestedUsers}</Link> :
+                                    item.numOfInterestedUsers}
+                            </li>
 
                             <li className="list-group-item"><b>Last update: </b>{item.lastUpdatedAt}</li>
                         </ul>

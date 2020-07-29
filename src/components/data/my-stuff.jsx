@@ -104,11 +104,6 @@ class MyStuff extends Form {
     }
 
 
-
-    showInterestedUsersDetails = (itemId) => {
-
-    }
-
     addToInterestingItems = (itemId) => {
 
     }
@@ -159,7 +154,6 @@ class MyStuff extends Form {
                                     onChangeSwapStatus={() => this.changeSwapStatus(item)}
 
                                     showInterestedUsersAsLink={true}
-                                    onShowInterestedUsersDetails={() => this.showInterestedUsersDetails(item._id)}
 
                                     showAddToInterestingItems={true}
                                     onAddToInterestingItems={() => this.addToInterestingItems(item._id)}
