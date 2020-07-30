@@ -25,6 +25,12 @@ export const addItem = async (data, fileToUpload) => {
     }
 }
 
+
+export const addInterestingItems = async (data) => {
+    await httpClient.post(`${apiUrl}/items/addinterestingitems`, data);
+}
+
+
 export const updateItem = async (data, fileToUpload) => {
 
     // save details
@@ -45,8 +51,9 @@ export const updateItem = async (data, fileToUpload) => {
     }
 }
 
-
-
+export const deleteInterestingItems = async (itemIds) => {
+    await httpClient.delete(`${apiUrl}/items/deleteinterestingitems`, { itemIds });
+}
 
 
 export const getCategories = async () => {
@@ -59,10 +66,25 @@ export const getUserItems = async () => {
     return data.userItems;
 }
 
+export const getUserInterestingItems = async () => {
+    const { data } = await httpClient.get(`${apiUrl}/items/userinterestingitems`);
+    return data.userInterestingItems;
+}
+
+export const getAllInterestedForItem = async (itemId) => {
+    const { data } = await httpClient.get(`${apiUrl}/items/allinterestedforitem`, { itemId: itemId });
+    return data.interestedForItem;
+}
+
 
 export default {
     addItem,
+    addInterestingItems,
     updateItem,
+    deleteInterestingItems,
     getCategories,
     getUserItems,
+    getUserInterestingItems,
+    getAllInterestedForItem,
+
 }

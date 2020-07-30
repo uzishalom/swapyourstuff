@@ -60,7 +60,8 @@ class Item extends Component {
                         </ul>
 
                         <div className="card-body border">
-                            <a href="#" className="card-link">Favorite</a>
+                            {this.props.showAddToInterestingItems && <Link to="" onClick={this.props.onAddToInterestingItems}><i className="far fa-thumbs-up" title="Add to my interesting items"></i></Link>}
+                            {this.props.showRemoveFromInterestingItems && <Link to="" onClick={this.props.onRemoveFromInterestingItems}><i className="far fa-thumbs-down" title="Remove from my interesting items"></i></Link>}
 
                             <a href="#" className="card-link">Edit</a>
 

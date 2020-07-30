@@ -106,6 +106,16 @@ class MyStuff extends Form {
 
     addToInterestingItems = (itemId) => {
 
+        console.log("show warning that the details will be exposed");
+
+
+    }
+
+    removeFromInterestingItems = (itemId) => {
+
+        console.log("not show");
+
+
     }
 
     updateItem = (itemId) => {
@@ -156,7 +166,9 @@ class MyStuff extends Form {
                                     showInterestedUsersAsLink={true}
 
                                     showAddToInterestingItems={true}
+                                    showRemoveFromInterestingItems={true}
                                     onAddToInterestingItems={() => this.addToInterestingItems(item._id)}
+                                    onRemoveFromInterestingItems={() => this.removeFromInterestingItems(item._id)}
 
                                     showUpdate={true}
                                     onUpdate={() => this.updateItem(item._id)}
