@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import Joi from "joi-browser";
 import Swal from 'sweetalert2'
+import { toast } from 'react-toastify';
 
 
 import PageHeader from "../common/page-header"
@@ -105,12 +106,40 @@ class MyStuff extends Form {
         }
     }
 
-    removeFromInterestingItems = (itemId) => {
+    // removeFromInterestingItems = async (itemIds) => {
+    //     let userConfirmed = false;
+    //     await Swal.fire({
+    //         icon: 'warning',
+    //         title: 'Not Interested Anymore ?',
+    //         html: "The selected item/s will no longer be in your interesting list",
+    //         showCloseButton: true,
+    //         showCancelButton: true,
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         confirmButtonText: 'Yes, remove them!',
+    //         cancelButtonText: 'No, Keep them'
+    //     }).then((result) => {
+    //         userConfirmed = result.isConfirmed;
+    //     }).catch((error) => {
+    //         console.log(error);
+    //     });
 
-        console.log("not show");
+    //     if (!userConfirmed) return;
 
+    //     // Update Display
+    //     this.allUserItems = this.allUserItems.filter(item => !itemIds.includes(item._id));
+    //     this.filterData();
 
-    }
+    //     //Update DB
+    //     try {
+    //         await itemsService.deleteInterestingItems(itemIds);
+    //         toast.success("The selected items were removed from your interesting items list.");
+    //     }
+    //     catch (ex) {
+    //         console.log(ex);
+    //         toast.error("There was an error , please try again");
+    //     }
+    // }
 
     updateItem = (itemId) => {
 
@@ -158,9 +187,9 @@ class MyStuff extends Form {
 
                                     showInterestedUsersAsLink={true}
 
-                                    showAddToInterestingItems={true}
-                                    showRemoveFromInterestingItems={true}
-                                    onRemoveFromInterestingItems={() => this.removeFromInterestingItems(item._id)}
+                                    // showAddToInterestingItems={true}
+                                    // showRemoveFromInterestingItems={true}
+                                    // onRemoveFromInterestingItems={() => this.removeFromInterestingItems([item._id])}
 
                                     showUpdate={true}
                                     onUpdate={() => this.updateItem(item._id)}

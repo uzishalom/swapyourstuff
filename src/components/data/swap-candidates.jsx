@@ -3,7 +3,6 @@ import Joi from "joi-browser";
 import Swal from 'sweetalert2'
 import { toast } from 'react-toastify';
 
-
 import PageHeader from "../common/page-header"
 import itemsService from "../../services/items-service"
 import Form from "../common/form"
@@ -15,7 +14,6 @@ import { yesOption, noOption, hasImageOptions } from "../../config/definitions"
 class SwapCandidates extends Form {
 
     interestingInItemIds = this.props.match.params.itemIds.split("-");
-
 
     allUserUnswappedItems = [];
     categoryIdToNameArray = [];

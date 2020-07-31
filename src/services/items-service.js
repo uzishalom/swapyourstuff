@@ -51,8 +51,9 @@ export const updateItem = async (data, fileToUpload) => {
     }
 }
 
-export const deleteInterestingItems = async (itemIds) => {
-    await httpClient.delete(`${apiUrl}/items/deleteinterestingitems`, { itemIds });
+export const deleteInterestingItems = async (data) => {
+
+    await httpClient.delete(`${apiUrl}/items/deleteinterestingitems/${data.join("-")}`);
 }
 
 
