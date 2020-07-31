@@ -78,6 +78,7 @@ class Signin extends Form {
             title: 'New Password Email',
             html: `If <b>${email}</b> exists in our system, <br>
             We will send an email with a new password`,
+            showCloseButton: true,
         })
         userService.forgotPassword(email);
     }

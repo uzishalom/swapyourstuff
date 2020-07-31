@@ -59,14 +59,15 @@ class Item extends Component {
                             <li className="list-group-item"><b>Last update: </b>{moment(item.lastUpdatedAt).calendar()}</li>
                         </ul>
 
-                        <div className="card-body border">
-                            {this.props.showAddToInterestingItems && <Link to="" onClick={this.props.onAddToInterestingItems}><i className="far fa-thumbs-up" title="Add to my interesting items"></i></Link>}
+                        {(this.props.showAddToInterestingItems || this.props.showRemoveFromInterestingItems || this.props.showUpdate || this.props.showDelete) && <div className="card-body border">
+                            {this.props.showAddToInterestingItems && <Link to={"/swap-candidates/" + item._id}><i className="far fa-thumbs-up" title="Add to my interesting items"></i></Link>}
+
                             {this.props.showRemoveFromInterestingItems && <Link to="" onClick={this.props.onRemoveFromInterestingItems}><i className="far fa-thumbs-down" title="Remove from my interesting items"></i></Link>}
 
-                            <a href="#" className="card-link">Edit</a>
+                            {this.props.showUpdate && <a href="#" className="card-link">Edit</a>}
 
-                            <a href="#" className="card-link">Delete</a>
-                        </div>
+                            {this.props.showDelete && <a href="#" className="card-link">Delete</a>}
+                        </div>}
                     </div>
                 </div>
 

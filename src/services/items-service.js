@@ -66,6 +66,11 @@ export const getUserItems = async () => {
     return data.userItems;
 }
 
+export const getUserUnswappedItems = async () => {
+    const { data } = await httpClient.get(`${apiUrl}/items/userunswappeditems`);
+    return data.userItems;
+}
+
 export const getUserInterestingItems = async () => {
     const { data } = await httpClient.get(`${apiUrl}/items/userinterestingitems`);
     return data.userInterestingItems;
@@ -84,6 +89,7 @@ export default {
     deleteInterestingItems,
     getCategories,
     getUserItems,
+    getUserUnswappedItems,
     getUserInterestingItems,
     getAllInterestedForItem,
 

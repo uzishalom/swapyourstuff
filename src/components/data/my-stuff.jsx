@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import Joi from "joi-browser";
+import Swal from 'sweetalert2'
+
 
 import PageHeader from "../common/page-header"
 import itemsService from "../../services/items-service"
@@ -103,14 +105,6 @@ class MyStuff extends Form {
         }
     }
 
-
-    addToInterestingItems = (itemId) => {
-
-        console.log("show warning that the details will be exposed");
-
-
-    }
-
     removeFromInterestingItems = (itemId) => {
 
         console.log("not show");
@@ -131,9 +125,8 @@ class MyStuff extends Form {
 
     render() {
         const criteriaClassName = "col-lg-3";
-        itemsService.getCategories();
         return (
-            <React.Fragment>
+            <React.Fragment >
                 <PageHeader title="My Stuff" />
                 <div className="container">
                     <Link className={"btn btn-primary my-2 d-lg-none d--block"} to="/add-item">Add New Item</Link>
@@ -167,7 +160,6 @@ class MyStuff extends Form {
 
                                     showAddToInterestingItems={true}
                                     showRemoveFromInterestingItems={true}
-                                    onAddToInterestingItems={() => this.addToInterestingItems(item._id)}
                                     onRemoveFromInterestingItems={() => this.removeFromInterestingItems(item._id)}
 
                                     showUpdate={true}
@@ -189,7 +181,7 @@ class MyStuff extends Form {
 
                 </div>
 
-            </React.Fragment>
+            </React.Fragment >
         );
     }
 
