@@ -141,9 +141,6 @@ class MyStuff extends Form {
     //     }
     // }
 
-    updateItem = (itemId) => {
-
-    }
 
     deleteItem = (itemId) => {
 
@@ -192,7 +189,6 @@ class MyStuff extends Form {
                                     // onRemoveFromInterestingItems={() => this.removeFromInterestingItems([item._id])}
 
                                     showUpdate={true}
-                                    onUpdate={() => this.updateItem(item._id)}
 
                                     showDelete={true}
                                     onDelete={() => this.deleteItem(item._id)}

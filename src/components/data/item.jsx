@@ -64,7 +64,7 @@ class Item extends Component {
 
                             {this.props.showRemoveFromInterestingItems && <Link to="" onClick={this.props.onRemoveFromInterestingItems}><i className="far fa-thumbs-down" title="Remove from my interesting items"></i></Link>}
 
-                            {this.props.showUpdate && <a href="#" className="card-link">Edit</a>}
+                            {this.props.showUpdate && <Link to={"/updateitem/" + item._id} title="Update This Item"><i className="far fa-edit ml-5"></i></Link>}
 
                             {this.props.showDelete && <a href="#" className="card-link">Delete</a>}
                         </div>}
