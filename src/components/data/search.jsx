@@ -112,6 +112,7 @@ class Search extends Form {
                                 <Item item={item}
                                     showItemSelection={true}
                                     onItemSelectionChanged={() => this.changeItemSelection(item._id)}
+                                    checked={this.state.selectedItems.includes(item._id)}
 
                                     categoryName={this.categoryIdToNameArray[item.categoryId]}
 

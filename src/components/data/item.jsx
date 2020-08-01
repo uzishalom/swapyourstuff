@@ -32,7 +32,8 @@ class Item extends Component {
         return (
             <React.Fragment>
                 <div className="card card border-secondary h-100">
-                    {this.props.showItemSelection && <input className="big-check-box" type="checkbox" value="" onChange={this.props.onItemSelectionChanged} />}
+                    {this.props.showItemSelection && <input className="big-check-box" type="checkbox" value="" onChange={this.props.onItemSelectionChanged} checked={this.props.checked} />}
+
                     {item.image && <img className="card-img-top item-image" src={apiUrl + "/" + item.image} alt="Item" style={{ cursor: "pointer" }} onClick={this.showLargeImage} />}
                     {!item.image && <div className="text-center"><h1 className="text-secondary bg-light border py-5" ><i className="fas fa-camera fa-4x"></i></h1></div>}
 
