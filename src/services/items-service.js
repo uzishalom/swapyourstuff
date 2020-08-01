@@ -82,6 +82,13 @@ export const getAllInterestedForItem = async (itemId) => {
     return data.interestedForItem;
 }
 
+export const getItemsToSearch = async () => {
+    const { data } = await httpClient.get(`${apiUrl}/items/itemstosearch`);
+    return data.items;
+}
+
+
+
 
 export default {
     addItem,
@@ -93,5 +100,6 @@ export default {
     getUserUnswappedItems,
     getUserInterestingItems,
     getAllInterestedForItem,
+    getItemsToSearch,
 
 }

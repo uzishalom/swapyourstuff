@@ -60,6 +60,7 @@ class SwapCandidates extends Form {
         }
 
         this.setState({ filteredUserItems });
+
     }
 
 
@@ -135,7 +136,6 @@ class SwapCandidates extends Form {
 
     render() {
         const criteriaClassName = "col-lg-3";
-        console.log(this.interestingInItemIds);
 
         return (
             <React.Fragment>
