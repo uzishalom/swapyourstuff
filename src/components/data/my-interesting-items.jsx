@@ -124,16 +124,15 @@ class MyInterestingItems extends Form {
 
         return (
             <React.Fragment>
-                <PageHeader title="My Interesting Items" />
-                <div className="container mt-3">
-                    <div className="mt-3 text-success text-lg-center">
-                        The following list contains other users items that you are interested in.
+                <PageHeader title="My Interesting Items" >
+                    The following list contains other users items that you are interested in.
                     <br />
                     These users can see your personal details and which items you suggested to swap with them.
                     <br />
                     If by any reason you are not interested anymore in some of the items, please select them and press the button below.
-                    </div>
+                </PageHeader>
 
+                <div className="container mt-3">
                     <div className="row mt-5">
                         {this.renderInput(false, "title", "Search By Title", "text", criteriaClassName, "Search By Title")}
                         {this.renderSelectBox(false, "categoryId", "Category", this.state.categories, "Serach By  Category", criteriaClassName, this.state.categoryId)}

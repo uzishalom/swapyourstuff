@@ -139,14 +139,14 @@ class SwapCandidates extends Form {
 
         return (
             <React.Fragment>
-                <PageHeader title="Swap Candidates" />
-                <div className="container mt-3">
-                    <div className="mt-3 text-success text-lg-center">
-                        You have chosen <b>{this.interestingInItemIds.length}</b> interesting items that you would like to have.
+                <PageHeader title="Swap Candidates" >
+                    You have chosen <b>{this.interestingInItemIds.length}</b> interesting items that you would like to have.
                     <br />
                     Please select from your own items below, the ones that you would like to give in return.
-                    </div>
+                </PageHeader>
 
+
+                <div className="container mt-3">
                     <div className="row mt-5">
                         {this.renderInput(false, "title", "Search By Title", "text", criteriaClassName, "Search By Title")}
                         {this.renderSelectBox(false, "categoryId", "Category", this.state.categories, "Serach By  Category", criteriaClassName, this.state.categoryId)}

@@ -83,15 +83,14 @@ class Search extends Form {
 
         return (
             <React.Fragment>
-                <PageHeader title="Search For Interesting Items" />
-                <div className="container mt-3">
-                    <div className="mt-3 text-success text-lg-center">
-                        Please select items that you are interested to get and press the button below to add them to your interesting items list.
+                <PageHeader title="Search For Interesting Items" >
+                    Please select items that you are interested to get and press the button below to add them to your interesting items list.
                     <br />
                     Please note that after selecting, you will need to choose which items you are willing to give in return.
                     <br />
-                    </div>
+                </PageHeader>
 
+                <div className="container mt-3">
                     <div className="row mt-5">
                         {this.renderInput(false, "title", "Search By Title", "text", criteriaClassName, "Search By Title")}
                         {this.renderSelectBox(false, "categoryId", "Category", this.state.categories, "Serach By  Category", criteriaClassName, this.state.categoryId)}
