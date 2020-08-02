@@ -74,7 +74,7 @@ export const getUserUnswappedItems = async () => {
 
 export const getUserInterestingItems = async () => {
     const { data } = await httpClient.get(`${apiUrl}/items/userinterestingitems`);
-    return data.userInterestingItems;
+    return data.items;
 }
 
 export const getAllInterestedForItem = async (itemId) => {

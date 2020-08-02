@@ -12,6 +12,7 @@ import userService from "./services/user-service"
 import MyStuff from "./components/data/my-stuff"
 import AddItem from "./components/data/add-item"
 import InterestedInItem from "./components/data/interested-in-item"
+import MyInterestingItems from "./components/data/my-interesting-items"
 import SwapCandidates from "./components/data/swap-candidates"
 import UpdateItem from "./components/data/update-item"
 import Search from "./components/data/search"
@@ -49,6 +50,7 @@ class App extends Component {
             <Route exact path="/my-stuff" component={user ? MyStuff : Home} />
             <Route exact path="/add-item" component={user ? AddItem : Home} />
             <Route exact path="/interested-in-item/:itemIds" component={user ? InterestedInItem : Home} />
+            <Route exact path="/myinterestingitems" component={user ? MyInterestingItems : Home} />
             <Route exact path="/swap-candidates/:itemIds" component={user ? SwapCandidates : Home} />
             <Route exact path="/updateitem/:id" component={user ? UpdateItem : Home} />
             <Route exact path="/search" component={user ? Search : Home} />

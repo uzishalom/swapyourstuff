@@ -1,5 +1,7 @@
 import React from 'react';
 import Joi from "joi-browser";
+import Swal from 'sweetalert2'
+import { toast } from 'react-toastify';
 
 import PageHeader from "../common/page-header"
 import itemsService from "../../services/items-service"
@@ -9,9 +11,9 @@ import Item from "./item"
 import { yesOption, noOption, hasImageOptions } from "../../config/definitions"
 
 
-class Search extends Form {
+class MyInterestingItems extends Form {
 
-    allItemsToSearchBy = [];
+    allUserInterestingItems = [];
     categoryIdToNameArray = [];
 
     state = {
@@ -36,10 +38,9 @@ class Search extends Form {
     }
 
 
-    filterData = () => {
-        if (this.allItemsToSearchBy.length === 0) return;
+    filterData = async () => {
         const { title, categoryId, hasImage } = { ...this.state.data };
-        let filteredUserItems = [...this.allItemsToSearchBy];
+        let filteredUserItems = [...this.allUserInterestingItems];
 
         if (title) {
             filteredUserItems = filteredUserItems.filter(item => item.title.toLowerCase().includes(title.toLowerCase()));
@@ -59,10 +60,44 @@ class Search extends Form {
     }
 
 
-    addInterestingItems = async () => {
-        const selectedItems = [...this.state.selectedItems];
-        const itemIdsToSend = selectedItems.join("-");
-        this.props.history.push(`/swap-candidates/${itemIdsToSend}`);
+    removeInterestingItems = async (itemId) => {
+
+        let userConfirmed = false;
+        await Swal.fire({
+            icon: 'warning',
+            title: 'Not Interested Anymore ?',
+            html: "The selected item/s will no longer be in your interesting list",
+            showCloseButton: true,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, remove them!',
+            cancelButtonText: 'No, Keep them'
+        }).then((result) => {
+            userConfirmed = result.isConfirmed;
+        }).catch((error) => {
+            console.log(error);
+        });
+
+        if (!userConfirmed) return;
+
+        let itemIds = itemId === 0 ? [...this.state.selectedItems] : [itemId];
+
+        // Update Display
+        this.allUserInterestingItems = this.allUserInterestingItems.filter(item => !itemIds.includes(item._id));
+        this.filterData();
+        await this.setState({ selectedItems: [] })
+
+
+        //Update DB
+        try {
+            await itemsService.deleteInterestingItems(itemIds);
+            toast.success("The selected items were removed from your interesting items list.");
+        }
+        catch (ex) {
+            console.log(ex);
+            toast.error("There was an error , please try again");
+        }
     }
 
     changeItemSelection = async (itemId) => {
@@ -78,18 +113,20 @@ class Search extends Form {
 
     }
 
+
     render() {
         const criteriaClassName = "col-lg-3";
 
         return (
             <React.Fragment>
-                <PageHeader title="Search For Interesting Items" />
+                <PageHeader title="My Interesting Items" />
                 <div className="container mt-3">
                     <div className="mt-3 text-success text-lg-center">
-                        Please select items that you are interested to get and press the button below to add them to your interesting items list.
+                        The following list contains other users items that you are interested in.
                     <br />
-                    Please note that after selecting, you will need to choose which items you are willing to give in return.
+                    These users can see your personal details and which items you suggested to swap with them.
                     <br />
+                    If by any reason you are not interested anymore in some of the items, please select them and press the button below.
                     </div>
 
                     <div className="row mt-5">
@@ -100,11 +137,11 @@ class Search extends Form {
 
                     {this.state.filteredUserItems.length > 0 && <div className="mt-5">
                         {this.state.inSubmitProcess ? <InProcessIndicator /> : <React.Fragment>
-                            <button className="btn btn-primary mb-0" disabled={this.state.selectedItems.length === 0} onClick={this.addInterestingItems}>Add to my Interesting Items</button>
+                            <button className="btn btn-primary mb-0" disabled={this.state.selectedItems.length === 0} onClick={() => { this.removeInterestingItems() }}>Remove From List</button>
                         </React.Fragment>}
                     </div>}
-                </div>
 
+                </div>
                 <div className="container mt-3">
                     {!this.state.inLoadingProcess && this.state.filteredUserItems.length > 0 && <div className="row">
                         {this.state.filteredUserItems.map(item =>
@@ -114,9 +151,10 @@ class Search extends Form {
                                     onItemSelectionChanged={() => this.changeItemSelection(item._id)}
                                     checked={this.state.selectedItems.includes(item._id)}
 
-                                    categoryName={this.categoryIdToNameArray[item.categoryId]}
+                                    showRemoveFromInterestingItems={true}
+                                    onRemoveFromInterestingItems={() => this.removeInterestingItems(item._id)}
 
-                                    showAddToInterestingItems={true}
+                                    categoryName={this.categoryIdToNameArray[item.categoryId]}
                                 >
                                 </Item>
                             </div>
@@ -152,9 +190,9 @@ class Search extends Form {
             console.log(ex);
         }
 
-        // Get items to search
+        // Get all user interesting items.
         try {
-            this.allItemsToSearchBy = await itemsService.getItemsToSearch();
+            this.allUserInterestingItems = await itemsService.getUserInterestingItems();
             this.filterData();
         }
         catch (ex) {
@@ -166,4 +204,4 @@ class Search extends Form {
 
 }
 
-export default Search;
+export default MyInterestingItems;

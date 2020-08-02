@@ -35,6 +35,12 @@ class Navbar extends Component {
 
                             {user && <React.Fragment>
                                 <li className="nav-item">
+                                    <NavLink className="nav-link" to="/myinterestingitems">My Interesting Items</NavLink>
+                                </li>
+                            </React.Fragment>}
+
+                            {user && <React.Fragment>
+                                <li className="nav-item">
                                     <NavLink className="nav-link" to="/search">Search</NavLink>
                                 </li>
                             </React.Fragment>}
