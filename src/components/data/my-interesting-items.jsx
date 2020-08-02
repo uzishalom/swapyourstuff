@@ -60,7 +60,12 @@ class MyInterestingItems extends Form {
     }
 
 
-    removeInterestingItems = async (itemId) => {
+    removeInterestingItems = async (e = null) => {
+        let itemId = "";
+        if (e) {
+            e.preventDefault();
+            itemId = e.target.id.split("_")[0];
+        }
 
         let userConfirmed = false;
         await Swal.fire({
@@ -81,7 +86,7 @@ class MyInterestingItems extends Form {
 
         if (!userConfirmed) return;
 
-        let itemIds = itemId === 0 ? [...this.state.selectedItems] : [itemId];
+        let itemIds = itemId === "" ? [...this.state.selectedItems] : [itemId];
 
         // Update Display
         this.allUserInterestingItems = this.allUserInterestingItems.filter(item => !itemIds.includes(item._id));
@@ -152,7 +157,7 @@ class MyInterestingItems extends Form {
                                     checked={this.state.selectedItems.includes(item._id)}
 
                                     showRemoveFromInterestingItems={true}
-                                    onRemoveFromInterestingItems={() => this.removeInterestingItems(item._id)}
+                                    onRemoveFromInterestingItems={this.removeInterestingItems}
 
                                     categoryName={this.categoryIdToNameArray[item.categoryId]}
                                 >

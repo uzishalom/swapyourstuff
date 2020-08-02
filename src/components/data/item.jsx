@@ -38,7 +38,7 @@ class Item extends Component {
                     {!item.image && <div className="text-center"><h1 className="text-secondary bg-light border py-5" ><i className="fas fa-camera fa-4x"></i></h1></div>}
 
                     <div className="card-body">
-                        <h3 className="card-title">{this.props.showUser && <span><Link to="" onClick={this.props.onShowUserDetails}><i className="fas fa-user" title="View User Details" /></Link> </span>}     {item.title} </h3>
+                        <h3 className="card-title">{this.props.showUser && <span><Link to="" onClick={this.props.onShowUserDetails}><i id={item._id + "_userdetails"} className="fas fa-user" title="View User Details" /></Link> </span>}     {item.title} </h3>
 
                         <p className="card-text long-text">{item.description}</p>
                     </div>
@@ -63,7 +63,7 @@ class Item extends Component {
                         {(this.props.showAddToInterestingItems || this.props.showRemoveFromInterestingItems || this.props.showUpdate || this.props.showDelete) && <div className="card-body border">
                             {this.props.showAddToInterestingItems && <Link to={"/swap-candidates/" + item._id}><i className="far fa-thumbs-up" title="Add to my interesting items"></i></Link>}
 
-                            {this.props.showRemoveFromInterestingItems && <Link to="" onClick={this.props.onRemoveFromInterestingItems}><i className="far fa-thumbs-down" title="Remove from my interesting items"></i></Link>}
+                            {this.props.showRemoveFromInterestingItems && <Link to="" onClick={this.props.onRemoveFromInterestingItems}><i id={item._id + "_removefrominteresting"} className="far fa-thumbs-down" title="Remove from my interesting items"></i></Link>}
 
                             {this.props.showUpdate && <Link to={"/updateitem/" + item._id} title="Update This Item"><i className="far fa-edit ml-5"></i></Link>}
 

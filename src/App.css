@@ -35,7 +35,8 @@
 .long-text {
   overflow-y:auto;
   max-height: 150px;
-  }
+  white-space: pre-line;
+}
 
   
 
