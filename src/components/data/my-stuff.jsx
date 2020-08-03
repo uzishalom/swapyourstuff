@@ -142,11 +142,43 @@ class MyStuff extends Form {
     // }
 
 
-    deleteItem = (itemId) => {
+    deleteItem = async (e) => {
+        e.preventDefault();
+        const itemId = e.target.id.split("_")[0];
 
+        let userConfirmed = false;
+        await Swal.fire({
+            icon: 'warning',
+            title: 'Attention !!!',
+            html: "You have chosen to completely remove the item from the system <br/> By doing so, you will loose all information regarding this item",
+            showCloseButton: true,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Remove the item!',
+            cancelButtonText: 'I regret, keep it'
+        }).then((result) => {
+            userConfirmed = result.isConfirmed;
+        }).catch((error) => {
+            console.log(error);
+        });
+
+        if (!userConfirmed) return;
+
+        // Update Display
+        this.allUserItems = this.allUserItems.filter(item => item._id !== itemId);
+        this.filterData();
+
+        //Update DB
+        try {
+            await itemsService.deleteItem(itemId);
+            toast.success("The item with all its related data was removed completelly from the system.");
+        }
+        catch (ex) {
+            console.log(ex);
+            toast.error("There was an error , please try again");
+        }
     }
-
-
 
 
     render() {
@@ -191,7 +223,7 @@ class MyStuff extends Form {
                                     showUpdate={true}
 
                                     showDelete={true}
-                                    onDelete={() => this.deleteItem(item._id)}
+                                    onDelete={this.deleteItem}
                                 >
                                 </Item>
                             </div>

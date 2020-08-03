@@ -65,9 +65,9 @@ class Item extends Component {
 
                             {this.props.showRemoveFromInterestingItems && <Link to="" onClick={this.props.onRemoveFromInterestingItems}><i id={item._id + "_removefrominteresting"} className="far fa-thumbs-down" title="Remove from my interesting items"></i></Link>}
 
-                            {this.props.showUpdate && <Link to={"/updateitem/" + item._id} title="Update This Item"><i className="far fa-edit ml-5"></i></Link>}
+                            {this.props.showUpdate && <Link to={"/updateitem/" + item._id} title="Update This Item"><i className="far fa-edit fa-lg"></i></Link>}
 
-                            {this.props.showDelete && <a href="#" className="card-link">Delete</a>}
+                            {this.props.showDelete && <Link to="" title="Delete Item" onClick={this.props.onDelete}><i id={item._id + "_deleteitem"} className="far fa-trash-alt ml-2 fa-lg"></i></Link>}
                         </div>}
                     </div>
                 </div>
@@ -78,8 +78,6 @@ class Item extends Component {
                         <button onClick={this.hideLargeImage} className="btn btn-success mb-3">close</button>
                     </div>
                 </div>}
-
-
             </React.Fragment>
         );
     }

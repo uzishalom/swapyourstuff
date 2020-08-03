@@ -56,6 +56,11 @@ export const deleteInterestingItems = async (data) => {
     await httpClient.delete(`${apiUrl}/items/deleteinterestingitems/${data.join("-")}`);
 }
 
+export const deleteItem = async (itemId) => {
+
+    await httpClient.delete(`${apiUrl}/items/delete/${itemId}`);
+}
+
 
 export const getCategories = async () => {
     const { data } = await httpClient.get(`${apiUrl}/categories`);
@@ -99,6 +104,7 @@ export default {
     addInterestingItems,
     updateItem,
     deleteInterestingItems,
+    deleteItem,
     getCategories,
     getUserItems,
     getUserUnswappedItems,
