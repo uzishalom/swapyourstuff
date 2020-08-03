@@ -10,18 +10,19 @@ import itemsService from "../../services/items-service"
 
 
 class UpdateItem extends Form {
-    userId = this.props.match.params.id;
-    generalErrorMessage = "There was an error in adding the new item to your stuff, please try again";
+    itemId = this.props.match.params.id;
+    generalErrorMessage = "There was an error in updating the item, please try again";
     allowedFileTypes = ".gif,.png,.jpeg,.jpg";
     allowedFileTypesToShow = this.allowedFileTypes.split('.').join(' ');
     fileToUpload = null;
     maxFileSize = 10;
 
     state = {
-        data: { title: "", description: "", categoryId: "", image: "" },
+        data: { title: "", description: "", categoryId: "", swapped: false, image: "" },
         errors: {},
         inSubmitProcess: false,
         categories: [],
+        originalItem: null,
     }
 
     validationSchema = {
@@ -32,6 +33,7 @@ class UpdateItem extends Form {
                 message: "Please Choose Category"
             };
         }),
+        swapped: Joi.boolean().required(),
         image: Joi.any()
     }
 
@@ -48,6 +50,9 @@ class UpdateItem extends Form {
         const data = { ...this.state.data }
         const errors = { ...this.state.errors }
         delete errors.general;
+        delete data.image; // image is uploaded on second phase.
+        data._id = this.itemId;
+        data.numOfInterestedUsers = this.state.originalItem.numOfInterestedUsers;
         this.setState({ errors });
 
         try {
@@ -60,8 +65,8 @@ class UpdateItem extends Form {
                 return;
             }
 
-            await itemsService.addItem(data, this.fileToUpload);
-            toast.success(`The "${data.title}" item was added successfully`);
+            await itemsService.updateItem(data, this.fileToUpload);
+            toast.success(`The "${this.state.originalItem.title}" item was updated successfully`);
             this.props.history.goBack();
 
         }
@@ -115,30 +120,39 @@ class UpdateItem extends Form {
 
     render() {
         const inputClassName = "";
-        itemsService.getCategories();
 
         return (
-            <div className="container">
-                <PageHeader title="Update Item XXXX" />
-                <form onSubmit={this.handleSubmit} method="Post" className="form-group mt-5" auto-complete="off">
-                    <div className="row">
-                        <div className="col-lg-3"></div>
-                        <div className="col-lg-6 col-12">
-                            {this.renderInput(true, "title", "Title", "text", inputClassName, "Item Title")}
-                            {this.renderTextarea(true, "description", "Description", "10", "50", inputClassName, "Detailed Description")}
-                            {this.renderSelectBox(true, "categoryId", "Category", this.state.categories, "Choose Category...", inputClassName, this.state.categoryId)}
-                            {this.renderFileUpload(false, "image", `Upload Item Image (Up to ${this.maxFileSize}MB in ${this.allowedFileTypesToShow} formats)`, this.allowedFileTypes, inputClassName)}
-                            <div className="mt-3">
-                                {this.state.inSubmitProcess ? <InProcessIndicator /> : this.renderButton("Save")}
-                                <span className="ml-3"></span>
-                                {this.state.inSubmitProcess ? "" : this.renderCancelButton("Cancel")}
+            <React.Fragment>
+                {this.state.originalItem && <div className="container">
+                    <PageHeader title={`Update ${this.state.originalItem ? this.state.originalItem.title : ''} Item`} />
+                    <form onSubmit={this.handleSubmit} method="Post" className="form-group mt-5" auto-complete="off">
+                        <div className="row">
+                            <div className="col-lg-3"></div>
+                            <div className="col-lg-6 col-12">
+                                {this.renderInput(true, "title", "Title", "text", inputClassName, "Item Title")}
+                                {this.renderTextarea(true, "description", "Description", "10", "50", inputClassName, "Detailed Description")}
+                                {this.renderSelectBox(true, "categoryId", "Category", this.state.categories, "Choose Category...", inputClassName, this.state.categoryId)}
+                                {this.renderCheckBox("swapped", "Swapped ?", inputClassName, this.state.categoryId)}
+                                <br />
+                                {this.renderFileUpload(false, "image", `Upload Item Image (Up to ${this.maxFileSize}MB in ${this.allowedFileTypesToShow} formats)`, this.allowedFileTypes, inputClassName)}
+                                <div className="mt-3">
+                                    {this.state.inSubmitProcess ? <InProcessIndicator /> : this.renderButton("Save")}
+                                    <span className="ml-3"></span>
+                                    {this.state.inSubmitProcess ? "" : this.renderCancelButton("Cancel")}
+                                </div>
+                                <div className="text-danger mt-3">{this.state.errors.general}</div>
                             </div>
-                            <div className="text-danger mt-3">{this.state.errors.general}</div>
+                            <div className="col-lg-3"></div>
                         </div>
-                        <div className="col-lg-3"></div>
+                    </form>
+                </div>}
+
+                {!this.state.originalItem &&
+                    <div className="container text-center">
+                        <InProcessIndicator />
                     </div>
-                </form>
-            </div>
+                }
+            </React.Fragment>
 
         );
     }
@@ -154,8 +168,18 @@ class UpdateItem extends Form {
         catch (ex) {
             console.log(ex);
         }
-    }
 
+        // Get item
+        try {
+            const originalItem = await itemsService.getItem(this.itemId);
+            await this.setState({ originalItem });
+            const data = { title: originalItem.title, description: originalItem.description, categoryId: originalItem.categoryId, swapped: originalItem.swapped, image: "" };
+            await this.setState({ data });
+        }
+        catch (ex) {
+            console.log(ex);
+        }
+    }
 
 }
 

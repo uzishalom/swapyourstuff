@@ -34,7 +34,7 @@ export const addInterestingItems = async (data) => {
 export const updateItem = async (data, fileToUpload) => {
 
     // save details
-    const response = await httpClient.put(`${apiUrl}/items/updateitem`, data);
+    await httpClient.put(`${apiUrl}/items/updateitem`, data);
 
     //upload image
     if (fileToUpload) {
@@ -43,7 +43,7 @@ export const updateItem = async (data, fileToUpload) => {
         const reqDetails = {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'itemId': response.data.newItemId,
+                'itemId': data._id,
                 'fileExt': path.extname(fileToUpload.name).toLowerCase(),
             }
         };

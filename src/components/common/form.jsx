@@ -3,6 +3,7 @@ import Joi from "joi-browser";
 import Input from "./input";
 import TextArea from "./textarea";
 import SelectBox from "./select-box";
+import CheckBox from "./check-box";
 import FileUpload from "./file-upload";
 
 class Form extends Component {
@@ -75,7 +76,16 @@ class Form extends Component {
         this.props.history.goBack();
     };
 
+    handleCheckBoxChange = e => {
+        const { data } = this.state;
+        data[e.target.name] = e.target.checked;
 
+        this.setState({ data });
+
+        if (this.additionalInputChangeHandling) {
+            this.additionalInputChangeHandling(e.target);
+        }
+    }
 
     renderButton(title) {
         return (
@@ -148,6 +158,21 @@ class Form extends Component {
             />
         );
     }
+
+    renderCheckBox(name, title, className) {
+        const { data } = this.state;
+
+        return (
+            <CheckBox
+                name={name}
+                checked={data[name]}
+                title={title}
+                onChange={this.handleCheckBoxChange}
+                className={className}
+            />
+        );
+    }
+
 
     renderFileUpload(required, name, title, accept, className) {
         const { data, errors } = this.state;

@@ -114,7 +114,6 @@ class AddItem extends Form {
 
     render() {
         const inputClassName = "";
-        itemsService.getCategories();
 
         return (
             <div className="container">
