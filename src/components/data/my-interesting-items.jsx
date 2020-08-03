@@ -130,6 +130,8 @@ class MyInterestingItems extends Form {
                     These users can see your personal details and which items you suggested to swap with them.
                     <br />
                     If by any reason you are not interested anymore in some of the items, please select them and press the button below.
+                    <br />
+                    Please note that if a user allready swapped an item, it will be removed automatically from the list.
                 </PageHeader>
 
                 <div className="container mt-3">

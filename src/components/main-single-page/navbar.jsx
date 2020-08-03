@@ -10,7 +10,7 @@ class Navbar extends Component {
 
         return (
 
-            <nav className="navbar navbar-expand-lg navbar-light shadow-sm">
+            <nav className="navbar navbar-expand-lg navbar-dark bg-success shadow-sm">
                 <div className="container">
                     <Link className="navbar-brand" to="/">
                         <img src={logo} width="30" height="30" alt="swap your stuff logo" /> Swap Your Stuff</Link>
@@ -53,13 +53,13 @@ class Navbar extends Component {
                             {user &&
                                 (<React.Fragment>
                                     <li className="nav-item">
-                                        <NavLink className="nav-link" to="/logout">Logout</NavLink>
-                                    </li>
-                                    <li className="nav-item">
                                         <NavLink className="nav-link" to="/user-details">My Details</NavLink>
                                     </li>
                                     <li className="nav-item">
                                         <NavLink className="nav-link" to="/change-password">Change Password</NavLink>
+                                    </li>
+                                    <li className="nav-item">
+                                        <NavLink className="nav-link" to="/logout">Logout</NavLink>
                                     </li>
                                 </React.Fragment>)}
                             {!user &&
