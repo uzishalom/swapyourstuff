@@ -77,17 +77,21 @@ export const getUserInterestingItems = async () => {
     return data.items;
 }
 
-export const getAllInterestedForItem = async (itemId) => {
-    const { data } = await httpClient.get(`${apiUrl}/items/allinterestedforitem`, { itemId: itemId });
-    return data.interestedForItem;
-}
 
 export const getItemsToSearch = async () => {
     const { data } = await httpClient.get(`${apiUrl}/items/itemstosearch`);
     return data.items;
 }
 
+export const getSuggestedSwapItems = async (itemId) => {
+    const { data } = await httpClient.get(`${apiUrl}/items/suggestedswapitems/${itemId}`);
+    return data.items;
+}
 
+export const getItem = async (itemId) => {
+    const { data } = await httpClient.get(`${apiUrl}/items/${itemId}`);
+    return data.item;
+}
 
 
 export default {
@@ -99,7 +103,8 @@ export default {
     getUserItems,
     getUserUnswappedItems,
     getUserInterestingItems,
-    getAllInterestedForItem,
     getItemsToSearch,
+    getItem,
+    getSuggestedSwapItems,
 
 }

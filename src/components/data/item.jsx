@@ -38,7 +38,7 @@ class Item extends Component {
                     {!item.image && <div className="text-center"><h1 className="text-secondary bg-light border py-5" ><i className="fas fa-camera fa-4x"></i></h1></div>}
 
                     <div className="card-body">
-                        <h3 className="card-title">{this.props.showUser && <span><Link to="" onClick={this.props.onShowUserDetails}><i id={item._id + "_userdetails"} className="fas fa-user" title="View User Details" /></Link> </span>}     {item.title} </h3>
+                        <h3 className="card-title">{this.props.showUser && <span><Link to="" onClick={this.props.onShowUserDetails}><i id={item.userId + "_userdetails"} className="fas fa-user" title="View User Details" /></Link> </span>}     {item.title} </h3>
 
                         <p className="card-text long-text">{item.description}</p>
                     </div>

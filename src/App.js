@@ -49,7 +49,7 @@ class App extends Component {
             <Route exact path="/" component={user ? MyStuff : Home} />
             <Route exact path="/my-stuff" component={user ? MyStuff : Home} />
             <Route exact path="/add-item" component={user ? AddItem : Home} />
-            <Route exact path="/interested-in-item/:itemIds" component={user ? InterestedInItem : Home} />
+            <Route exact path="/interested-in-item/:itemId" component={user ? InterestedInItem : Home} />
             <Route exact path="/myinterestingitems" component={user ? MyInterestingItems : Home} />
             <Route exact path="/swap-candidates/:itemIds" component={user ? SwapCandidates : Home} />
             <Route exact path="/updateitem/:id" component={user ? UpdateItem : Home} />
