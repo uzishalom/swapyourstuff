@@ -25,7 +25,7 @@ class MyStuff extends Form {
         errors: {},
         inSubmitProcess: false,
         categories: [],
-        filteredUserItems: [],
+        filteredItems: [],
         inLoadingProcess: true,
     }
 
@@ -45,29 +45,29 @@ class MyStuff extends Form {
     filterData = () => {
         if (this.allUserItems.length === 0) return;
         const { title, categoryId, hasImage, swapped } = { ...this.state.data };
-        let filteredUserItems = [...this.allUserItems];
+        let filteredItems = [...this.allUserItems];
 
         if (title) {
-            filteredUserItems = filteredUserItems.filter(item => item.title.toLowerCase().includes(title.toLowerCase()));
+            filteredItems = filteredItems.filter(item => item.title.toLowerCase().includes(title.toLowerCase()));
         }
 
         if (categoryId) {
-            filteredUserItems = filteredUserItems.filter(item => item.categoryId === categoryId);
+            filteredItems = filteredItems.filter(item => item.categoryId === categoryId);
         }
 
         if (hasImage) {
-            filteredUserItems = filteredUserItems.filter(item =>
+            filteredItems = filteredItems.filter(item =>
                 (hasImage === yesOption && item.image !== "") || (hasImage === noOption && item.image === "")
             );
         }
 
         if (swapped) {
-            filteredUserItems = filteredUserItems.filter(item =>
+            filteredItems = filteredItems.filter(item =>
                 (swapped === yesOption && item.swapped) || (swapped === noOption && !item.swapped)
             );
         }
 
-        this.setState({ filteredUserItems });
+        this.setState({ filteredItems });
     }
 
 
@@ -167,8 +167,8 @@ class MyStuff extends Form {
                     </div>
                 </div>
                 <div className="container mt-3">
-                    {!this.state.inLoadingProcess && this.state.filteredUserItems.length > 0 && <div className="row">
-                        {this.state.filteredUserItems.map(item =>
+                    {!this.state.inLoadingProcess && this.state.filteredItems.length > 0 && <div className="row">
+                        {this.state.filteredItems.map(item =>
                             <div key={item._id} className="col-lg-4 px-3 py-3">
                                 <Item item={item}
                                     //showItemSelection={false}  // YYYYYYYYYY
@@ -197,7 +197,7 @@ class MyStuff extends Form {
                             </div>
                         )}
                     </div>}
-                    {!this.state.inLoadingProcess && this.state.filteredUserItems.length === 0 &&
+                    {!this.state.inLoadingProcess && this.state.filteredItems.length === 0 &&
                         <div className="text-center mt-5 text-info"><h3>No Items Found</h3></div>
                     }
                     {this.state.inLoadingProcess &&

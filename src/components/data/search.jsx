@@ -19,7 +19,7 @@ class Search extends Form {
         errors: {},
         inSubmitProcess: false,
         categories: [],
-        filteredUserItems: [],
+        filteredItems: [],
         inLoadingProcess: true,
         selectedItems: [],
     }
@@ -39,23 +39,23 @@ class Search extends Form {
     filterData = () => {
         if (this.allItemsToSearchBy.length === 0) return;
         const { title, categoryId, hasImage } = { ...this.state.data };
-        let filteredUserItems = [...this.allItemsToSearchBy];
+        let filteredItems = [...this.allItemsToSearchBy];
 
         if (title) {
-            filteredUserItems = filteredUserItems.filter(item => item.title.toLowerCase().includes(title.toLowerCase()));
+            filteredItems = filteredItems.filter(item => item.title.toLowerCase().includes(title.toLowerCase()));
         }
 
         if (categoryId) {
-            filteredUserItems = filteredUserItems.filter(item => item.categoryId === categoryId);
+            filteredItems = filteredItems.filter(item => item.categoryId === categoryId);
         }
 
         if (hasImage) {
-            filteredUserItems = filteredUserItems.filter(item =>
+            filteredItems = filteredItems.filter(item =>
                 (hasImage === yesOption && item.image !== "") || (hasImage === noOption && item.image === "")
             );
         }
 
-        this.setState({ filteredUserItems });
+        this.setState({ filteredItems });
     }
 
 
@@ -97,7 +97,7 @@ class Search extends Form {
                         {this.renderSelectBox(false, "hasImage", "Image", hasImageOptions, "Image", criteriaClassName, this.state.hasImage)}
                     </div>
 
-                    {this.state.filteredUserItems.length > 0 && <div className="mt-5">
+                    {this.state.filteredItems.length > 0 && <div className="mt-5">
                         {this.state.inSubmitProcess ? <InProcessIndicator /> : <React.Fragment>
                             <button className="btn btn-primary mb-0" disabled={this.state.selectedItems.length === 0} onClick={this.addInterestingItems}>Add to my Interesting Items</button>
                         </React.Fragment>}
@@ -105,8 +105,8 @@ class Search extends Form {
                 </div>
 
                 <div className="container mt-3">
-                    {!this.state.inLoadingProcess && this.state.filteredUserItems.length > 0 && <div className="row">
-                        {this.state.filteredUserItems.map(item =>
+                    {!this.state.inLoadingProcess && this.state.filteredItems.length > 0 && <div className="row">
+                        {this.state.filteredItems.map(item =>
                             <div key={item._id} className="col-lg-4 px-3 py-3">
                                 <Item item={item}
                                     showItemSelection={true}
@@ -121,7 +121,7 @@ class Search extends Form {
                             </div>
                         )}
                     </div>}
-                    {!this.state.inLoadingProcess && this.state.filteredUserItems.length === 0 &&
+                    {!this.state.inLoadingProcess && this.state.filteredItems.length === 0 &&
                         <div className="text-center mt-5 text-info"><h3>No Items Found</h3></div>
                     }
                     {this.state.inLoadingProcess &&

@@ -23,7 +23,7 @@ class SwapCandidates extends Form {
         errors: {},
         inSubmitProcess: false,
         categories: [],
-        filteredUserItems: [],
+        filteredItems: [],
         inLoadingProcess: true,
         selectedItems: [],
     }
@@ -43,23 +43,23 @@ class SwapCandidates extends Form {
     filterData = () => {
         if (this.allUserUnswappedItems.length === 0) return;
         const { title, categoryId, hasImage } = { ...this.state.data };
-        let filteredUserItems = [...this.allUserUnswappedItems];
+        let filteredItems = [...this.allUserUnswappedItems];
 
         if (title) {
-            filteredUserItems = filteredUserItems.filter(item => item.title.toLowerCase().includes(title.toLowerCase()));
+            filteredItems = filteredItems.filter(item => item.title.toLowerCase().includes(title.toLowerCase()));
         }
 
         if (categoryId) {
-            filteredUserItems = filteredUserItems.filter(item => item.categoryId === categoryId);
+            filteredItems = filteredItems.filter(item => item.categoryId === categoryId);
         }
 
         if (hasImage) {
-            filteredUserItems = filteredUserItems.filter(item =>
+            filteredItems = filteredItems.filter(item =>
                 (hasImage === yesOption && item.image !== "") || (hasImage === noOption && item.image === "")
             );
         }
 
-        this.setState({ filteredUserItems });
+        this.setState({ filteredItems });
 
     }
 
@@ -162,8 +162,8 @@ class SwapCandidates extends Form {
 
                 </div>
                 <div className="container mt-3">
-                    {!this.state.inLoadingProcess && this.state.filteredUserItems.length > 0 && <div className="row">
-                        {this.state.filteredUserItems.map(item =>
+                    {!this.state.inLoadingProcess && this.state.filteredItems.length > 0 && <div className="row">
+                        {this.state.filteredItems.map(item =>
                             <div key={item._id} className="col-lg-4 px-3 py-3">
                                 <Item item={item}
                                     showItemSelection={true}
@@ -176,7 +176,7 @@ class SwapCandidates extends Form {
                             </div>
                         )}
                     </div>}
-                    {!this.state.inLoadingProcess && this.state.filteredUserItems.length === 0 &&
+                    {!this.state.inLoadingProcess && this.state.filteredItems.length === 0 &&
                         <div className="text-center mt-5 text-info"><h3>No Items Found</h3></div>
                     }
                     {this.state.inLoadingProcess &&
