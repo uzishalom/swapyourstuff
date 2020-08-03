@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 
 import PageHeader from "../common/page-header"
 import itemsService from "../../services/items-service"
-// import userService from "../../services/user-service" YYYYYYYYYY
 import Form from "../common/form"
 import InProcessIndicator from "../common/in-process-indicator";
 import Item from "./item"
@@ -18,7 +17,6 @@ import { yesOption, noOption, hasImageOptions, swappedOptions } from "../../conf
 class MyStuff extends Form {
     allUserItems = [];
     categoryIdToNameArray = [];
-    // selectedItems = [] // YYYYYYYY
 
     state = {
         data: { title: "", categoryId: "", hasImage: "", swapped: noOption },
@@ -70,31 +68,6 @@ class MyStuff extends Form {
         this.setState({ filteredItems });
     }
 
-
-    // YYYYYYYYYY
-    /*
-    changeItemSelection = (itemId) => {
-        const indexToRemove = this.selectedItems.indexOf(itemId);
-        if (indexToRemove > -1) {
-            this.selectedItems.splice(indexToRemove, 1);
-        }
-        else {
-            this.selectedItems.push(itemId);
-        }
-
-    }
-    */
-
-    /*
-
-
-    // YYYYYYYYYY
-    showUserDetails = async (userId) => {
-        userService.showUserDetailsPopup(userId);
-    }
-
-    */
-
     changeSwapStatus = async (item) => {
         try {
             item.swapped = !item.swapped;
@@ -105,42 +78,6 @@ class MyStuff extends Form {
             console.log(ex);
         }
     }
-
-    // removeFromInterestingItems = async (itemIds) => {
-    //     let userConfirmed = false;
-    //     await Swal.fire({
-    //         icon: 'warning',
-    //         title: 'Not Interested Anymore ?',
-    //         html: "The selected item/s will no longer be in your interesting list",
-    //         showCloseButton: true,
-    //         showCancelButton: true,
-    //         confirmButtonColor: '#3085d6',
-    //         cancelButtonColor: '#d33',
-    //         confirmButtonText: 'Yes, remove them!',
-    //         cancelButtonText: 'No, Keep them'
-    //     }).then((result) => {
-    //         userConfirmed = result.isConfirmed;
-    //     }).catch((error) => {
-    //         console.log(error);
-    //     });
-
-    //     if (!userConfirmed) return;
-
-    //     // Update Display
-    //     this.allUserItems = this.allUserItems.filter(item => !itemIds.includes(item._id));
-    //     this.filterData();
-
-    //     //Update DB
-    //     try {
-    //         await itemsService.deleteInterestingItems(itemIds);
-    //         toast.success("The selected items were removed from your interesting items list.");
-    //     }
-    //     catch (ex) {
-    //         console.log(ex);
-    //         toast.error("There was an error , please try again");
-    //     }
-    // }
-
 
     deleteItem = async (e) => {
         e.preventDefault();
@@ -203,22 +140,12 @@ class MyStuff extends Form {
                         {this.state.filteredItems.map(item =>
                             <div key={item._id} className="col-lg-4 px-3 py-3">
                                 <Item item={item}
-                                    //showItemSelection={false}  // YYYYYYYYYY
-                                    //onItemSelectionChanged={() => this.changeItemSelection(item._id)}  // YYYYYYYYYY
-
-                                    //showUser={false} // YYYYYYYYYY
-                                    //onShowUserDetails={() => this.showUserDetails(item.userId)}  // YYYYYYYYYY
-
                                     categoryName={this.categoryIdToNameArray[item.categoryId]}
 
                                     showChangeSwapStatus={true}
                                     onChangeSwapStatus={() => this.changeSwapStatus(item)}
 
                                     showInterestedUsersAsLink={true}
-
-                                    // showAddToInterestingItems={true}
-                                    // showRemoveFromInterestingItems={true}
-                                    // onRemoveFromInterestingItems={() => this.removeFromInterestingItems([item._id])}
 
                                     showUpdate={true}
 
