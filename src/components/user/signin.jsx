@@ -70,16 +70,30 @@ class Signin extends Form {
         this.showGeneralErrorMessage();
     }
 
-    forgotPassword = (e) => {
+    forgotPassword = async (e) => {
         e.preventDefault();
         const { email } = this.state.data;
-        Swal.fire({
+
+        let userConfirmed = false;
+        await Swal.fire({
             icon: 'info',
             title: 'New Password Email',
             html: `If <b>${email}</b> exists in our system, <br>
             We will send an email with a new password`,
             showCloseButton: true,
-        })
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Send Email',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            userConfirmed = result.isConfirmed;
+        }).catch((error) => {
+            console.log(error);
+        });
+
+        if (!userConfirmed) return;
+
         userService.forgotPassword(email);
     }
 
