@@ -1,7 +1,7 @@
 import React from 'react';
 import Joi from "joi-browser"
 import Swal from 'sweetalert2'
-import { Link } from "react-router-dom"
+// import { Link } from "react-router-dom"
 
 
 import PageHeader from "../common/page-header"
@@ -113,7 +113,7 @@ class Signin extends Form {
                             {this.state.inSubmitProcess ? <InProcessIndicator /> :
                                 <React.Fragment>
                                     {this.renderButton("Login")}
-                                    {this.state.data.email && !this.state.errors.email && <Link to="" className="text-primary float-right" onClick={(e) => this.forgotPassword(e)}><u>I forgot my password</u></Link>}
+                                    {/* {this.state.data.email && !this.state.errors.email && <Link to="" className="text-primary float-right" onClick={(e) => this.forgotPassword(e)}><u>I forgot my password</u></Link>} */}
                                 </React.Fragment>}
                         </div>
                         <div className="text-danger mt-3">{this.state.errors.general}</div>
