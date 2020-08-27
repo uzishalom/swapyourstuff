@@ -17,10 +17,10 @@ class About extends Component {
                         <div className="col-lg-3"></div>
                         <div className="col-lg-6">
                             <p>Hi,</p>
-                            <p>Welcone to Swap Your Stuff.</p>
+                            <p>Welcome to Swap Your Stuff.</p>
                             <p>Here you can exchange your private materials with others from all over the country.</p>
                             <p>Just share with everyone which items you want to give and search for items you want to get.</p>
-                            <p>You can view who is intersted in your stuff and decide if you want to make the exchange.</p>
+                            <p>You can view who is interested in your stuff and decide if you want to make the exchange.</p>
 
                             {user && (
                                 <React.Fragment>
